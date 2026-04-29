@@ -4,7 +4,7 @@ export const setDependencies = sdk.setupDependencies(async () => {
   return {
     lnd: {
       kind: 'running',
-      versionRange: '>=0.20.1 <0.22.0',
+      versionRange: '>=0.20.0 <0.22.0',
       healthChecks: []
     }
   }
