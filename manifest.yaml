@@ -85,7 +85,7 @@ interfaces:
 
 dependencies:
   lnd:
-    version: ">=0.20.0 <0.22.0"
+    version: ">=0.20.1 <0.22.0"
     description: Used to communicate with the Lightning Network.
     requirement:
       type: required
