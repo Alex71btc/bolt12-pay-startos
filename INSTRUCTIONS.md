@@ -2,21 +2,23 @@
 
 ## 🌍 Overview
 
-This app allows you to run a fully self-hosted Lightning payment endpoint with:
+BOLT12 Pay is a fully self-hosted Lightning payment and identity server.
 
-* ⚡ LNURL Pay
-* ⚡ BOLT12 Offers
-* 🌐 Lightning Address
-* 🔒 No Cloudflare Tunnel required
+It supports:
+
+- ⚡ LNURL Pay
+- ⚡ BOLT12 Offers
+- 🌐 Lightning Address
+- 🔒 Direct clearnet exposure (no Cloudflare Tunnel required)
 
 ---
 
 ## 1️⃣ Requirements
 
-* Public IPv4 (no CGNAT)
-* StartOS 0.4
-* Domain (e.g. alex71btc.com)
-* Router access (port forwarding)
+- Public IPv4 address (no CGNAT)
+- StartOS 0.4
+- Domain (e.g. example.com)
+- Router access (for port forwarding)
 
 ---
 
@@ -24,150 +26,118 @@ This app allows you to run a fully self-hosted Lightning payment endpoint with:
 
 Create an A record:
 
-```
 bolt12.example.com → YOUR_PUBLIC_IP
-```
 
 Example:
 
-```
-bolt12-040.alex71btc.com → 31.19.129.101
-```
+bolt12.example.com → 203.0.113.10
 
 👉 Cloudflare users:
 
-```
-⚠️ MUST be "DNS only" (no proxy / orange cloud OFF)
-```
+⚠️ MUST be "DNS only" (disable proxy / orange cloud OFF)
 
 ---
 
 ## 3️⃣ Router Port Forwarding
 
-Forward:
+Forward external port 443 to your StartOS server:
 
-```
-External Port: 443
-→ StartOS Server (internal IP)
-→ Port 443
-```
+443 → STARTOS_LOCAL_IP:443
 
 Example:
 
-```
-443 → 192.168.188.81:443
-```
+443 → 192.168.1.100:443
 
 ---
 
-## 4️⃣ StartOS Domain Setup
+## 4️⃣ App Interface Mapping (IMPORTANT)
 
-In StartOS:
+In StartOS, open:
 
-```
-System → Public Domain
-```
+BOLT12 Pay → Interfaces → Web UI
 
-Set:
+Set the public domain:
 
-```
-bolt12-040.example.com
-```
+bolt12.example.com
 
 Enable:
 
-```
 ✔ Let's Encrypt (Production)
-```
+
+Then set the Primary URL:
+
+https://bolt12.example.com
+
+👉 This is the ONLY domain configuration required.
+
+❌ You do NOT need to expose the main StartOS UI domain.
 
 ---
 
-## 5️⃣ App Interface Mapping (IMPORTANT)
-
-In:
-
-```
-BOLT12 Pay → Interfaces → Web UI
-```
-
-Set:
-
-```
-Primary URL:
-https://bolt12-040.example.com
-```
-
-👉 Without this step the domain will show the StartOS UI!
-
----
-
-## 6️⃣ App Configuration
+## 5️⃣ App Configuration
 
 Open:
 
-```
-https://bolt12-040.example.com/admin
-```
+https://bolt12.example.com/admin
 
 Set:
 
-```
-LNURL Base Domain: bolt12-040.example.com
-LNURL Base URL: https://bolt12-040.example.com
-```
+LNURL Base Domain: bolt12.example.com  
+LNURL Base URL: https://bolt12.example.com  
 
 ---
 
-## 7️⃣ Test LNURL
+## 6️⃣ Test LNURL
 
-```
-curl https://bolt12-040.example.com/.well-known/lnurlp/test
-```
+Run:
 
----
+curl https://bolt12.example.com/.well-known/lnurlp/test
 
-## 8️⃣ Important Notes
+Expected result:
 
-```
-✔ Only port 443 is required
-✔ No Cloudflare Tunnel needed
-✔ Direct clearnet exposure
-```
+- JSON response → OK
+- "Alias not found" → also OK (means routing works)
 
 ---
 
-## 9️⃣ Troubleshooting
+## 7️⃣ Important Notes
+
+✔ Only port 443 is required  
+✔ No Cloudflare Tunnel needed  
+✔ Direct clearnet exposure via StartOS  
+✔ TLS handled automatically via Let's Encrypt  
+
+---
+
+## 8️⃣ Troubleshooting
 
 ### Domain shows StartOS UI
 
-👉 Primary URL not set
+👉 Primary URL is not set correctly
 
 ---
 
-### HTTPS fails
+### HTTPS does not work
 
-👉 Check:
+Check:
 
-```
-- DNS correct
-- Port 443 open
-- Let's Encrypt active
-```
+- DNS A record correct
+- Port 443 forwarded
+- Let's Encrypt enabled
 
 ---
 
-### Browser shows wrong page
+### Wrong page / old behavior
 
-👉 Clear cache or use incognito
+👉 Clear browser cache or use incognito mode
 
 ---
 
-## 🔥 Bonus
+## 🔥 Result
 
-You now run:
+You now run a fully sovereign Lightning endpoint:
 
-```
-✔ Sovereign Lightning endpoint
-✔ No third-party dependency
-✔ Full control over payments
-```
+✔ Self-hosted  
+✔ No third-party dependency  
+✔ Public Lightning Address  
+✔ BOLT12 + LNURL ready  

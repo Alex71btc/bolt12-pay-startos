@@ -1,11 +1,24 @@
 import { sdk } from './sdk'
 import { uiPort } from './utils'
-import { primaryUrlJson } from './fileModels/primaryUrl.json'
+
+function normalizePrimaryUrl(url: string): string {
+  const trimmed = (url || '').trim().replace(/\/+$/, '')
+  if (!trimmed) return ''
+  if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) return trimmed
+  return `https://${trimmed}`
+}
 
 export const main = sdk.setupMain(async ({ effects }) => {
   console.info('Starting BOLT12 Pay!')
 
-  const primaryUrl = (await primaryUrlJson.read((s) => s.url).const(effects)) || ''
+  const primaryUrl = normalizePrimaryUrl(
+    process.env.PRIMARY_URL ||
+      process.env.PUBLIC_BASE_URL ||
+      process.env.LNURL_BASE_URL ||
+      '',
+  )
+
+  console.info('Using primary URL:', primaryUrl)
 
   return sdk.Daemons.of(effects).addDaemon('primary', {
     subcontainer: await sdk.SubContainer.of(
