@@ -1,74 +1,173 @@
-# BOLT12 Pay – Setup Guide
+# BOLT12 Pay – Setup Guide (StartOS 0.4)
 
-## Requirement: LND BOLT12
+## 🌍 Overview
 
-BOLT12 Pay requires **LND BOLT12** on StartOS.
+This app allows you to run a fully self-hosted Lightning payment endpoint with:
 
-- App name in StartOS: **LND BOLT12**
-- Package ID: `lndbolt`
+* ⚡ LNURL Pay
+* ⚡ BOLT12 Offers
+* 🌐 Lightning Address
+* 🔒 No Cloudflare Tunnel required
 
-The default Start9 LND package does not support BOLT12 offers.
+---
 
-LND BOLT12 package and repository:
-https://github.com/Alex71btc/lnd-startos-bolt12/releases/latest
-https://github.com/Alex71btc/lnd-startos-bolt12
+## 1️⃣ Requirements
 
-## Migrate from official Start9 LND
+* Public IPv4 (no CGNAT)
+* StartOS 0.4
+* Domain (e.g. alex71btc.com)
+* Router access (port forwarding)
 
-If you already use the official Start9 LND, you can safely migrate your node state to **LND BOLT12**.
+---
 
-1. Stop both services:
-   - LND
-   - LND BOLT12
+## 2️⃣ DNS Setup
 
-2. Open **LND BOLT12**
-3. Go to:
-   - Actions
-   - Import from Start9 LND
+Create an A record:
 
-4. Wait until the import completes
+```
+bolt12.example.com → YOUR_PUBLIC_IP
+```
 
-Important:
-- Never run both nodes with the same wallet state at the same time
-- After migration, keep the old LND stopped or uninstall it
+Example:
 
-Your node identity, channels, and funds are preserved.
+```
+bolt12-040.alex71btc.com → 31.19.129.101
+```
 
-## Remote Access
+👉 Cloudflare users:
 
-For secure remote access, use the FOSS Cloudflare Tunnel app for StartOS:
+```
+⚠️ MUST be "DNS only" (no proxy / orange cloud OFF)
+```
 
-https://github.com/remcoros/cloudflared-startos/releases
+---
 
-Recommended:
-- expose BOLT12 Pay through the tunnel
-- protect `/pay` and `/pay-login`
-- keep required public payment endpoints reachable
+## 3️⃣ Router Port Forwarding
 
-## Wallets and Clients
+Forward:
 
-BOLT12 Pay works well together with:
+```
+External Port: 443
+→ StartOS Server (internal IP)
+→ Port 443
+```
 
-- Zeus
-- Alby
-- Nostr Wallet Connect (NWC)
+Example:
 
-For Zeus with LND REST:
-- use the Tor address shown in StartOS
-- if needed, replace `http://` with `https://`
+```
+443 → 192.168.188.81:443
+```
 
-## Notes
+---
 
-- BOLT12 Pay requires **LND BOLT12**, not the default Start9 LND
-- BOLT12 offers are provided through the LND BOLT12 + LNDK stack
-- LNURL and Lightning Address support are included in BOLT12 Pay
+## 4️⃣ StartOS Domain Setup
 
-## Installation
+In StartOS:
 
-This package is currently available only via GitHub Releases:
+```
+System → Public Domain
+```
 
-https://github.com/Alex71btc/bolt12-pay-start9/releases
+Set:
 
-⚠️ This is a sideload-only package.
-It is not available in the official Start9 Marketplace.
-Install and use at your own risk.
+```
+bolt12-040.example.com
+```
+
+Enable:
+
+```
+✔ Let's Encrypt (Production)
+```
+
+---
+
+## 5️⃣ App Interface Mapping (IMPORTANT)
+
+In:
+
+```
+BOLT12 Pay → Interfaces → Web UI
+```
+
+Set:
+
+```
+Primary URL:
+https://bolt12-040.example.com
+```
+
+👉 Without this step the domain will show the StartOS UI!
+
+---
+
+## 6️⃣ App Configuration
+
+Open:
+
+```
+https://bolt12-040.example.com/admin
+```
+
+Set:
+
+```
+LNURL Base Domain: bolt12-040.example.com
+LNURL Base URL: https://bolt12-040.example.com
+```
+
+---
+
+## 7️⃣ Test LNURL
+
+```
+curl https://bolt12-040.example.com/.well-known/lnurlp/test
+```
+
+---
+
+## 8️⃣ Important Notes
+
+```
+✔ Only port 443 is required
+✔ No Cloudflare Tunnel needed
+✔ Direct clearnet exposure
+```
+
+---
+
+## 9️⃣ Troubleshooting
+
+### Domain shows StartOS UI
+
+👉 Primary URL not set
+
+---
+
+### HTTPS fails
+
+👉 Check:
+
+```
+- DNS correct
+- Port 443 open
+- Let's Encrypt active
+```
+
+---
+
+### Browser shows wrong page
+
+👉 Clear cache or use incognito
+
+---
+
+## 🔥 Bonus
+
+You now run:
+
+```
+✔ Sovereign Lightning endpoint
+✔ No third-party dependency
+✔ Full control over payments
+```
