@@ -41,7 +41,7 @@ Optional:
 
 Edit:
 
-nano /media/startos/data/package-data/volumes/lnd/data/main/lnd.conf
+sudo nano /media/startos/data/package-data/volumes/lnd/data/main/lnd.conf
 
 Add:
 
