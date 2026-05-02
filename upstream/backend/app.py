@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import math
 import os
+from urllib.parse import urlparse
 import re
 import shlex
 import subprocess
@@ -58,12 +59,27 @@ LNDK_CERT_PATH = os.environ.get("LNDK_CERT_PATH", str(Path.home() / "lndk-tls-ce
 LNDK_MACAROON_PATH = os.environ.get("LNDK_MACAROON_PATH", str(Path.home() / "admin.macaroon"))
 REQUEST_TIMEOUT = float(os.environ.get("LNDK_TIMEOUT_SECONDS", "30"))
 CORS_ORIGINS = os.environ.get("CORS_ORIGINS", "*")
+PRIMARY_URL = os.environ.get("PRIMARY_URL", "").strip().rstrip("/")
 ALLOW_PAY_OFFER = os.environ.get("ALLOW_PAY_OFFER", "false").lower() in {"1", "true", "yes", "on"}
 
 PUBLIC_BIP353_ADDRESS = os.environ.get("PUBLIC_BIP353_ADDRESS", "").strip()
 PUBLIC_LNURL_ADDRESS = os.environ.get("PUBLIC_LNURL_ADDRESS", "").strip()
 LNURL_BASE_DOMAIN = os.environ.get("LNURL_BASE_DOMAIN", "").strip().lower()
 LNURL_BASE_URL = os.environ.get("LNURL_BASE_URL", "").strip().rstrip("/")
+
+# PRIMARY_URL parsed fallback: StartOS 0.4 Primary URL integration.
+# Only fills empty defaults; user-saved runtime config can still override later.
+if PRIMARY_URL:
+    _primary_parsed = urlparse(PRIMARY_URL)
+    if not LNURL_BASE_URL:
+        LNURL_BASE_URL = PRIMARY_URL
+    if not LNURL_BASE_DOMAIN and _primary_parsed.hostname:
+        LNURL_BASE_DOMAIN = _primary_parsed.hostname.lower()
+    if not PUBLIC_LNURL_ADDRESS and _primary_parsed.hostname:
+        PUBLIC_LNURL_ADDRESS = f"lnurl@{_primary_parsed.hostname.lower()}"
+    if not PUBLIC_BIP353_ADDRESS and _primary_parsed.hostname:
+        PUBLIC_BIP353_ADDRESS = f"bolt12@{_primary_parsed.hostname.lower()}"
+
 LND_REST_URL = os.environ.get("LND_REST_URL", "").strip().rstrip("/")
 LND_REST_INSECURE = os.environ.get("LND_REST_INSECURE", "false").lower() in {"1", "true", "yes", "on"}
 PAY_UI_PASSWORD = os.getenv("PAY_UI_PASSWORD", "").strip()

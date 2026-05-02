@@ -1,6 +1,6 @@
 id: bolt-pay
 title: "BOLT12 Pay"
-version: 0.2.79.0
+version: 0.2.85.0
 release-notes: |
   Initial StartOS service packaging for BOLT12 Pay with separate LNDK service.
 license: MIT

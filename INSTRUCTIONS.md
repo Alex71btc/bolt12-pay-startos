@@ -1,74 +1,185 @@
-# BOLT12 Pay – Setup Guide
+# BOLT12 Pay – Setup Guide (StartOS 0.4)
 
-## Requirement: LND BOLT12
+Self-hosted Lightning payment and identity server with full BOLT12 support.
 
-BOLT12 Pay requires **LND BOLT12** on StartOS.
+---
 
-- App name in StartOS: **LND BOLT12**
-- Package ID: `lndbolt`
+## 🌍 Overview
 
-The default Start9 LND package does not support BOLT12 offers.
+BOLT12 Pay combines:
 
-LND BOLT12 package and repository:
-https://github.com/Alex71btc/lnd-startos-bolt12/releases/latest
-https://github.com/Alex71btc/lnd-startos-bolt12
+- native BOLT12 offer creation and payment (via embedded LNDK)
+- Lightning Address support (BIP353 + LNURL)
+- BOLT11 fallback for compatibility
+- Nostr Wallet Connect (NWC)
+- self-hosted web UI
 
-## Migrate from official Start9 LND
+---
 
-If you already use the official Start9 LND, you can safely migrate your node state to **LND BOLT12**.
+## ⚠️ Important
 
-1. Stop both services:
-   - LND
-   - LND BOLT12
+- Not yet available in StartOS Marketplace
+- Installation via manual sideload
+- Use only if you understand backups
 
-2. Open **LND BOLT12**
-3. Go to:
-   - Actions
-   - Import from Start9 LND
+---
 
-4. Wait until the import completes
+# 1️⃣ Requirements
 
-Important:
-- Never run both nodes with the same wallet state at the same time
-- After migration, keep the old LND stopped or uninstall it
+- StartOS 0.4
+- LND running
+- at least one public Lightning channel
 
-Your node identity, channels, and funds are preserved.
+Optional:
 
-## Remote Access
+- Domain
+- Cloudflare account
 
-For secure remote access, use the FOSS Cloudflare Tunnel app for StartOS:
+---
+
+# 2️⃣ REQUIRED: LND Configuration (BOLT12)
+
+Edit:
+
+sudo nano /media/startos/data/package-data/volumes/lnd/data/main/lnd.conf
+
+Add:
+
+[protocol]
+protocol.custom-message=513
+protocol.custom-nodeann=39
+protocol.custom-init=39
+
+Restart LND
+
+---
+
+# 3️⃣ Option A — Native Clearnet
+
+DNS:
+
+bolt12.example.com → YOUR_PUBLIC_IP
+
+Router:
+
+443 → STARTOS_IP:443
+
+StartOS:
+
+BOLT12 Pay → Interfaces → Web UI
+
+Set:
+
+bolt12.example.com
+
+Enable:
+
+Let's Encrypt (Production)
+
+Primary URL:
+
+https://bolt12.example.com
+
+---
+
+# 4️⃣ Option B — Cloudflare Tunnel (Recommended)
+
+## Install
 
 https://github.com/remcoros/cloudflared-startos/releases
 
-Recommended:
-- expose BOLT12 Pay through the tunnel
-- protect `/pay` and `/pay-login`
-- keep required public payment endpoints reachable
+Version:
 
-## Wallets and Clients
+040.2026.3.0:2-beta.1
 
-BOLT12 Pay works well together with:
+---
 
-- Zeus
-- Alby
-- Nostr Wallet Connect (NWC)
+## Setup Flow
 
-For Zeus with LND REST:
-- use the Tor address shown in StartOS
-- if needed, replace `http://` with `https://`
+1. Open Cloudflare app in StartOS
+2. Export tunnel config (QR or link)
+3. Import into Cloudflare Dashboard
+4. Go to Zero Trust
+5. Import AGAIN under Tunnels
 
-## Notes
+IMPORTANT:
+This second import is required
 
-- BOLT12 Pay requires **LND BOLT12**, not the default Start9 LND
-- BOLT12 offers are provided through the LND BOLT12 + LNDK stack
-- LNURL and Lightning Address support are included in BOLT12 Pay
+---
 
-## Installation
+## Configure Public Hostname
 
-This package is currently available only via GitHub Releases:
+In StartOS:
 
-https://github.com/Alex71btc/bolt12-pay-start9/releases
+Cloudflare Tunnel → Add Public Hostname
 
-⚠️ This is a sideload-only package.
-It is not available in the official Start9 Marketplace.
-Install and use at your own risk.
+Example:
+
+bolt12.example.com
+
+---
+
+## Configure Route (CRITICAL)
+
+In Cloudflare Zero Trust:
+
+bolt12.example.com → http://bolt-pay.startos:8081
+
+Important:
+
+- exact service name required
+- must be bolt-pay.startos
+- port must be correct
+
+---
+
+## Why Cloudflare?
+
+- no port forwarding
+- works behind CGNAT
+- automatic TLS
+- safer exposure
+
+---
+
+# 5️⃣ App Configuration
+
+https://bolt12.example.com/admin
+
+Set:
+
+LNURL Base Domain: bolt12.example.com
+LNURL Base URL: https://bolt12.example.com
+
+---
+
+# 6️⃣ Test
+
+curl https://bolt12.example.com/.well-known/lnurlp/test
+
+---
+
+# 7️⃣ Troubleshooting
+
+StartOS UI appears:
+→ Primary URL not set
+
+HTTPS fails:
+→ DNS or port 443 wrong
+
+Cloudflare not working:
+→ Zero Trust route missing
+
+BOLT12 not working:
+→ LND config missing
+
+---
+
+# 🔥 Result
+
+Self-hosted Lightning endpoint
+
+- public
+- sovereign
+- BOLT12 + LNURL ready
+- no third-party dependency required
