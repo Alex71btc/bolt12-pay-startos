@@ -4,11 +4,11 @@ export const manifest = setupManifest({
   id: 'bolt-pay',
   title: 'BOLT12 Pay',
   license: 'mit',
-  packageRepo: 'https://github.com/Alex71btc/bolt12-pay-start9',
+  packageRepo: 'https://github.com/Alex71btc/bolt12-pay-startos',
   upstreamRepo: 'https://github.com/Alex71btc/lndk-pay',
   marketingUrl: 'https://github.com/Alex71btc/lndk-pay',
   donationUrl: null,
-  docsUrls: ['https://github.com/Alex71btc/bolt12-pay-start9/blob/startos-040-beta6/INSTRUCTIONS.md'],
+  docsUrls: ['https://github.com/Alex71btc/bolt12-pay-startos/blob/startos-040-beta6/INSTRUCTIONS.md'],
   icon: 'assets/icon.png',
   description: {
     short: 'Self-hosted Lightning payment server with BOLT12 support.',

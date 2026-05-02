@@ -17,7 +17,7 @@ BOLT12 Pay combines:
 This package is currently distributed via GitHub Releases only.
 
 Releases:
-https://github.com/Alex71btc/bolt12-pay-start9/releases
+https://github.com/Alex71btc/bolt12-pay-startos/releases
 
 ⚠️ Important:
 
