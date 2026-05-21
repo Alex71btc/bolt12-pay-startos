@@ -1,46 +1,108 @@
-# BOLT12 Pay – StartOS Service
+<p align="center">
+  <img src="icon.png" alt="BOLT12 Pay Logo" width="21%">
+</p>
 
-Self-hosted Lightning payment and identity server with BOLT12 support for StartOS.
+# BOLT12 Pay on StartOS
 
-BOLT12 Pay combines:
+> **Upstream:** <https://github.com/Alex71btc/lndk-pay>
+>
+> Everything not listed in this document should behave the same as upstream
+> lndk-pay. If a feature, setting, or behavior is not mentioned here, the
+> upstream documentation is accurate and fully applicable.
 
-* native BOLT12 offer creation and payment (via embedded LNDK)
-* Lightning Address support (BIP353 + LNURL)
-* BOLT11 fallback for compatibility
-* Nostr Wallet Connect (NWC)
-* self-hosted web UI
-
----
-
-## Installation
-
-This package is currently distributed via GitHub Releases only.
-
-Releases:
-https://github.com/Alex71btc/bolt12-pay-startos/releases
-
-⚠️ Important:
-
-* This package is **not available in the official StartOS Marketplace**
-* Installation currently requires **manual sideloading**
-* Use at your own risk
-* Make sure you understand backup and restore before testing on production systems
+[BOLT12 Pay](https://github.com/Alex71btc/lndk-pay) is a self-hosted Lightning payment and identity server. It runs an embedded [LNDK](https://github.com/lndk-org/lndk) runtime to create and pay BOLT12 offers through your StartOS LND node, and adds LNURL, Lightning Address (BIP353), and BOLT11 support with a simple web UI.
 
 ---
 
-# Option A — StartOS 0.4 Beta (Experimental)
+## Table of Contents
 
-This is the new experimental package for StartOS 0.4.
+- [Image and Container Runtime](#image-and-container-runtime)
+- [Volume and Data Layout](#volume-and-data-layout)
+- [Network Access and Interfaces](#network-access-and-interfaces)
+- [Actions (StartOS UI)](#actions-startos-ui)
+- [Dependencies](#dependencies)
+- [Backups and Restore](#backups-and-restore)
+- [Health Checks](#health-checks)
+- [Limitations and Differences](#limitations-and-differences)
+- [Contributing](#contributing)
+- [Quick Reference for AI Consumers](#quick-reference-for-ai-consumers)
 
-## Required LND Configuration (IMPORTANT)
+---
 
-Connect to your StartOS device via SSH and open:
+## Image and Container Runtime
 
-```bash
-nano /media/startos/data/package-data/volumes/lnd/data/main/lnd.conf
-```
+| Property | Value |
+|----------|-------|
+| Image | `main` — built from [`Dockerfile`](./Dockerfile) (upstream `app/` via the `upstream/` submodule + LNDK runtime) |
+| Base | `python:3.11-slim` + LNDK runtime from `alex71btc/lndk` |
+| Architectures | x86_64, aarch64 |
+| Entrypoint | `/usr/local/bin/docker_entrypoint.sh` → `start.sh` |
 
-Add:
+The container runs two processes from [`assets/start.sh`](./assets/start.sh):
+
+- **`uvicorn backend.app:app`** — the BOLT12 Pay web app on `0.0.0.0:8081`.
+- **`lndk`** — a background loop that waits for LND to be reachable, then runs LNDK against it (gRPC on `127.0.0.1:7000`, used by the app for BOLT12 offers).
+
+---
+
+## Volume and Data Layout
+
+| Volume | Mount Point | Purpose |
+|--------|-------------|---------|
+| `main` | `/data` | App config, secrets, and LNDK data dir (`/data/lndk`) |
+
+**Dependency mounts:**
+
+- `/mnt/lnd` — LND volume (read-only) — for the TLS cert (`tls.cert`) and admin macaroon (`data/chain/bitcoin/mainnet/admin.macaroon`).
+
+---
+
+## Network Access and Interfaces
+
+| Interface | Port | Protocol | Purpose |
+|-----------|------|----------|---------|
+| Web UI | 8081 | HTTP | BOLT12 Pay web interface |
+
+**Access methods (StartOS 0.4.0):**
+
+- LAN IP with unique port
+- `<hostname>.local` with unique port
+- Tor `.onion` address
+- Custom domains / clearnet (if configured)
+
+For Lightning Address / LNURL / `.well-known` endpoints to resolve publicly, expose the Web UI on a public hostname and select it via the **Set Primary URL** action (see below).
+
+---
+
+## Actions (StartOS UI)
+
+### Set Primary URL
+
+| Property | Value |
+|----------|-------|
+| ID | `set-primary-url` |
+| Visibility | Enabled |
+| Availability | Any status |
+| Purpose | Choose which non-local URL to advertise as the LNURL / Lightning Address base |
+
+Pick one of the service's non-local URLs (use a **clearnet or custom-domain** URL — Tor and `.local` won't resolve for external senders). The selection is stored on the `startos` volume and injected on next start as the app's native `LNURL_BASE_URL`, `LNURL_BASE_DOMAIN`, `PUBLIC_LNURL_ADDRESS`, and `PUBLIC_BIP353_ADDRESS` env vars. These are **defaults** — the in-app admin settings still override them. If a previously-selected URL is later removed, StartOS posts a task to pick a new one.
+
+---
+
+## Dependencies
+
+### LND (`lnd`)
+
+| Property | Value |
+|----------|-------|
+| **Required** | Yes |
+| **Version constraint** | `>=0.20.1-beta:2` |
+| **Health checks** | `lnd` must pass |
+| **Mounted volumes** | `lnd:main` at `/mnt/lnd` (read-only) — TLS cert and admin macaroon |
+| **Reached at** | `lnd.startos` (REST `:8080`, gRPC `:10009`) |
+| **Purpose** | Create and pay BOLT12 offers via LNDK |
+
+**LND must have onion-message support enabled.** BOLT12 offers require the following in `lnd.conf`, which is not set by the stock StartOS LND package and must be added manually:
 
 ```ini
 protocol.custom-message=513
@@ -48,183 +110,59 @@ protocol.custom-nodeann=39
 protocol.custom-init=39
 ```
 
-Then restart LND.
-
-Without this, BOLT12 Offers will not work.
-
-Creating BOLT12 offers requires at least one active public Lightning channel.
+See [instructions.md](./instructions.md) for the exact steps.
 
 ---
 
-## Cloudflare Tunnel (Recommended for Public Access)
+## Backups and Restore
 
-For StartOS 0.4, the recommended way to expose BOLT12 Pay publicly is via the Cloudflare Tunnel plugin.
+**Included in backup:**
 
-This is especially useful for:
+- `main` volume — app config, secrets, and LNDK data.
 
-* Lightning Address / BIP353
-* LNURL
-* `.well-known` endpoints
-* public payment pages
-* remote access without direct port forwarding
-
-### Step 1 — Install Cloudflare Tunnel Plugin
-
-Cloudflare Tunnel is currently installed via manual sideload.
-
-Release:
-
-https://github.com/remcoros/cloudflared-startos/releases
-
-Use the StartOS 0.4 package:
-
-`040.2026.3.0:2-beta.1` (pre-release)
-
-Install the `.s9pk` package manually via StartOS.
+LND credentials are not backed up here; they live on the LND package and are re-mounted on restore.
 
 ---
 
-### Step 2 — Initial Tunnel Setup
+## Health Checks
 
-After installation, open the Cloudflare Tunnel plugin.
-
-StartOS will automatically generate a tunnel configuration export.
-
-You will see:
-
-* a QR code
-* or a direct import link
-
-Open this link (or scan the QR code).
-
-This takes you to the Cloudflare Dashboard.
+| Check | Display Name | Method | Messages |
+|-------|--------------|--------|----------|
+| Web UI | "Web UI" | Port 8081 listening | "BOLT12 Pay is ready" / "BOLT12 Pay web interface is not ready" |
 
 ---
 
-### Step 3 — Import Tunnel in Cloudflare Dashboard
+## Limitations and Differences
 
-The tunnel must first be imported into your Cloudflare account.
-
-After this first import, the connector appears in Cloudflare.
-
-However:
-
-this is not enough yet.
-
-You must also complete the next step inside Cloudflare Zero Trust.
+1. **Manual LND configuration** — the `protocol.custom-*` options above must be added to `lnd.conf` by hand; BOLT12 offers will not work without them.
+2. **LNURL base URL** — seeded from the **Set Primary URL** action; the in-app admin settings can still override it. All other app configuration is done inside the web UI.
+3. **Mainnet only** — the LND macaroon path is pinned to `data/chain/bitcoin/mainnet`.
 
 ---
 
-### Step 4 — Import Again in Cloudflare Zero Trust
+## Contributing
 
-Go to:
-
-Cloudflare Dashboard → Zero Trust → Networks → Connectors → Tunnels
-
-There, import/activate the tunnel again so it becomes fully manageable inside Zero Trust.
-
-Only after this step can you configure proper application routes and public hostnames.
-
-This is the step many users miss.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for build instructions and development workflow.
 
 ---
 
-### Step 5 — Configure Public Hostname
+## Quick Reference for AI Consumers
 
-Inside StartOS, you can assign a hostname via:
-
-System → Interfaces → Plugin: Cloudflare Tunnel → Add Public Hostname
-
-However:
-
-StartOS only lets you define the hostname itself.
-
-It does **not** let you define the full internal service route.
-
-The actual service target must match the internal StartOS service hostname.
-
-Example:
-
-```text
-http://bolt-pay.startos:8081
+```yaml
+package_id: bolt12-pay
+image: main (built from Dockerfile; lndk-pay app/ submodule + LNDK runtime)
+architectures:
+  - x86_64
+  - aarch64
+volumes:
+  main: /data
+  startos: (StartOS metadata; not mounted into the container)
+dependency_mounts:
+  lnd: /mnt/lnd (read-only)
+ports:
+  ui: 8081
+dependencies:
+  - lnd (required, >=0.20.1-beta:2, needs protocol.custom-message=513/nodeann=39/init=39)
+actions:
+  - set-primary-url
 ```
-
-Important:
-
-The internal service name must exactly match the StartOS service hostname.
-
-Example working route:
-
-```text
-startos040.alex71btc.com
-→ http://bolt-pay.startos:8081
-```
-
-This final routing is configured in:
-
-Cloudflare Zero Trust → Tunnel → Published Application Routes
-
-not only inside StartOS.
-
-Without the correct internal route, the hostname will not work.
-
----
-
-## Notes
-
-Direct public IPv4 exposure is possible in StartOS 0.4, but for services like:
-
-* BOLT12 Pay
-* Specter
-* Lightning endpoints
-* `.well-known`
-* LNURL
-
-Cloudflare Tunnel is strongly recommended instead of direct public exposure.
-
-This is safer, cleaner, and works better with Cloudflare DNS automation.
-
----
-
-# Option B — StartOS 0.3.5.1 Stable
-
-This remains the stable production path for Raspberry Pi users.
-
-## Requirement: LND BOLT12
-
-* App name in StartOS: **LND BOLT12**
-* Package ID: `lndbolt`
-
-The default Start9 LND package does not support BOLT12 offers.
-
-Repository:
-https://github.com/Alex71btc/lnd-startos-bolt12
-
-## Migration from official Start9 LND
-
-1. Stop both:
-
-   * LND
-   * LND BOLT12
-
-2. Open **LND BOLT12**
-
-3. Run:
-
-   * Actions → Import from Start9 LND
-
-This preserves:
-
-* node identity
-* channels
-* funds
-
----
-
-## Features
-
-* BOLT12 Offers
-* LNURL and Lightning Address
-* BOLT11 fallback
-* Nostr Wallet Connect (NWC)
-* self-hosted web UI
