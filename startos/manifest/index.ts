@@ -5,7 +5,7 @@ export const manifest = setupManifest({
   id: 'bolt12-pay',
   title: 'BOLT12 Pay',
   license: 'mit',
-  packageRepo: 'https://github.com/Alex71btc/bolt12-pay-startos',
+  packageRepo: 'https://github.com/Start9-Community/bolt12-pay-startos',
   upstreamRepo: 'https://github.com/Alex71btc/lndk-pay',
   marketingUrl: 'https://github.com/Alex71btc/lndk-pay',
   donationUrl: null,
