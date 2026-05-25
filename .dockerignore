@@ -1,0 +1,11 @@
+.git
+.github
+node_modules
+javascript
+startos
+*.s9pk
+*.md
+
+# Only the app/ subdir of the upstream submodule is needed for the build.
+upstream/*
+!upstream/app

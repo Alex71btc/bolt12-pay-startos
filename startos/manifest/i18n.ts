@@ -1,26 +1,34 @@
-export const depBitcoindDescription = {
-  en_US: 'Used to subscribe to new block events.',
-  es_ES: 'Utilizado para suscribirse a eventos de nuevos bloques.',
-  de_DE: 'Wird verwendet, um neue Block-Ereignisse zu abonnieren.',
-  pl_PL: 'Używany do subskrybowania wydarzeń nowych bloków.',
-  fr_FR: "Utilisé pour s'abonner aux événements de nouveaux blocs.",
+export const short = {
+  en_US: 'Self-hosted Lightning payment server with BOLT12 support',
+  es_ES: 'Servidor de pagos Lightning autoalojado con soporte BOLT12',
+  de_DE: 'Selbstgehosteter Lightning-Zahlungsserver mit BOLT12-Unterstützung',
+  pl_PL: 'Samodzielnie hostowany serwer płatności Lightning z obsługą BOLT12',
+  fr_FR:
+    'Serveur de paiement Lightning auto-hébergé avec prise en charge BOLT12',
 }
 
-export default {
-  description: {
-    short: {
-      en_US: 'JoinMarket server with web UI',
-      es_ES: 'Servidor JoinMarket con interfaz web',
-      de_DE: 'JoinMarket-Server mit Web-UI',
-      pl_PL: 'Serwer JoinMarket z interfejsem webowym',
-      fr_FR: 'Serveur JoinMarket avec interface web',
-    },
-    long: {
-      en_US: 'Jam is Joinmarket plus a web user interface for JoinMarket focusing on user-friendliness and ease-of-use. It aims to provide sensible defaults and be easy to use for beginners while still having the features advanced users expect.',
-      es_ES: 'Jam es Joinmarket más una interfaz web para JoinMarket enfocada en la facilidad de uso. Su objetivo es proporcionar valores predeterminados sensatos y ser fácil de usar para principiantes sin dejar de tener las funciones que esperan los usuarios avanzados.',
-      de_DE: 'Jam ist Joinmarket plus eine Web-Benutzeroberfläche für JoinMarket mit Fokus auf Benutzerfreundlichkeit und einfache Bedienung. Es zielt darauf ab, sinnvolle Standardeinstellungen bereitzustellen und für Anfänger einfach zu bedienen zu sein, während es dennoch die Funktionen bietet, die fortgeschrittene Benutzer erwarten.',
-      pl_PL: 'Jam to Joinmarket plus webowy interfejs użytkownika dla JoinMarket skupiający się na przyjazności i łatwości użytkowania. Jego celem jest zapewnienie rozsądnych ustawień domyślnych i łatwość obsługi dla początkujących przy jednoczesnym zachowaniu funkcji oczekiwanych przez zaawansowanych użytkowników.',
-      fr_FR: "Jam est Joinmarket plus une interface web pour JoinMarket axée sur la convivialité et la facilité d'utilisation. Il vise à fournir des paramètres par défaut raisonnables et à être facile à utiliser pour les débutants tout en conservant les fonctionnalités attendues par les utilisateurs avancés.",
-    },
-  },
+export const long = {
+  en_US:
+    'BOLT12 Pay is a self-hosted Lightning payment and identity server. It runs an embedded LNDK runtime to create and pay BOLT12 offers through your StartOS LND node, and adds LNURL, Lightning Address, and BOLT11 support with a simple web UI.',
+  es_ES:
+    'BOLT12 Pay es un servidor de pagos e identidad Lightning autoalojado. Ejecuta un entorno LNDK integrado para crear y pagar ofertas BOLT12 a través de su nodo LND de StartOS, y añade soporte para LNURL, Lightning Address y BOLT11 con una sencilla interfaz web.',
+  de_DE:
+    'BOLT12 Pay ist ein selbstgehosteter Lightning-Zahlungs- und Identitätsserver. Es führt eine eingebettete LNDK-Laufzeit aus, um BOLT12-Angebote über Ihren StartOS-LND-Knoten zu erstellen und zu bezahlen, und ergänzt LNURL-, Lightning-Address- und BOLT11-Unterstützung mit einer einfachen Weboberfläche.',
+  pl_PL:
+    'BOLT12 Pay to samodzielnie hostowany serwer płatności i tożsamości Lightning. Uruchamia wbudowane środowisko LNDK do tworzenia i opłacania ofert BOLT12 za pośrednictwem węzła LND w StartOS oraz dodaje obsługę LNURL, Lightning Address i BOLT11 z prostym interfejsem webowym.',
+  fr_FR:
+    "BOLT12 Pay est un serveur de paiement et d'identité Lightning auto-hébergé. Il exécute un environnement LNDK intégré pour créer et payer des offres BOLT12 via votre nœud LND StartOS, et ajoute la prise en charge de LNURL, Lightning Address et BOLT11 avec une interface web simple.",
+}
+
+export const depLndDescription = {
+  en_US:
+    'Used to create and pay BOLT12 offers via LNDK. LND must have onion-message support enabled (protocol.custom-message=513, protocol.custom-nodeann=39, protocol.custom-init=39).',
+  es_ES:
+    'Se utiliza para crear y pagar ofertas BOLT12 mediante LNDK. LND debe tener habilitado el soporte de mensajes onion (protocol.custom-message=513, protocol.custom-nodeann=39, protocol.custom-init=39).',
+  de_DE:
+    'Wird verwendet, um BOLT12-Angebote über LNDK zu erstellen und zu bezahlen. LND muss die Onion-Message-Unterstützung aktiviert haben (protocol.custom-message=513, protocol.custom-nodeann=39, protocol.custom-init=39).',
+  pl_PL:
+    'Używany do tworzenia i opłacania ofert BOLT12 za pośrednictwem LNDK. LND musi mieć włączoną obsługę wiadomości onion (protocol.custom-message=513, protocol.custom-nodeann=39, protocol.custom-init=39).',
+  fr_FR:
+    'Utilisé pour créer et payer des offres BOLT12 via LNDK. LND doit avoir la prise en charge des messages onion activée (protocol.custom-message=513, protocol.custom-nodeann=39, protocol.custom-init=39).',
 }

@@ -1,24 +1,13 @@
 import { sdk } from './sdk'
-import { uiPort } from './utils'
-
-function normalizePrimaryUrl(url: string): string {
-  const trimmed = (url || '').trim().replace(/\/+$/, '')
-  if (!trimmed) return ''
-  if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) return trimmed
-  return `https://${trimmed}`
-}
+import { storeJson } from './fileModels/store.json'
+import { lnurlEnv, uiPort } from './utils'
 
 export const main = sdk.setupMain(async ({ effects }) => {
   console.info('Starting BOLT12 Pay!')
 
-  const primaryUrl = normalizePrimaryUrl(
-    process.env.PRIMARY_URL ||
-      process.env.PUBLIC_BASE_URL ||
-      process.env.LNURL_BASE_URL ||
-      '',
-  )
-
-  console.info('Using primary URL:', primaryUrl)
+  // Feed the user-selected primary URL to the app as its native LNURL/BIP353
+  // env defaults. Re-runs main when the "Set Primary URL" action changes it.
+  const primaryUrl = await storeJson.read((s) => s.primaryUrl).const(effects)
 
   return sdk.Daemons.of(effects).addDaemon('primary', {
     subcontainer: await sdk.SubContainer.of(
@@ -42,11 +31,7 @@ export const main = sdk.setupMain(async ({ effects }) => {
     ),
     exec: {
       command: ['/usr/local/bin/docker_entrypoint.sh'],
-      env: {
-        PRIMARY_URL: primaryUrl,
-        PUBLIC_BASE_URL: primaryUrl,
-        LNURL_BASE_URL: primaryUrl,
-      },
+      env: lnurlEnv(primaryUrl),
     },
     ready: {
       display: 'Web UI',
