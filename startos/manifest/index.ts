@@ -8,7 +8,6 @@ export const manifest = setupManifest({
   packageRepo: 'https://github.com/Start9-Community/bolt12-pay-startos',
   upstreamRepo: 'https://github.com/Alex71btc/lndk-pay',
   marketingUrl: 'https://github.com/Alex71btc/lndk-pay',
-  docsUrls: ['https://github.com/Alex71btc/lndk-pay'],
   donationUrl: null,
   description: { short, long },
   volumes: ['main', 'startos'],

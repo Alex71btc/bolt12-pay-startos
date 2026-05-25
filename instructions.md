@@ -12,13 +12,56 @@
 
 ## Before you start: enable onion messages on LND
 
-BOLT12 offers require onion-message support on your LND node. The stock StartOS LND package does **not** enable these by default, and they are not exposed as toggles in its config UI, so they must be set on the LND node directly:
+BOLT12 offers require onion-message support on your LND node.
+
+The current StartOS LND package does not expose these settings in the UI yet, so they must be added manually to `lnd.conf`.
+
+### 1. SSH into your StartOS server
+
+From another computer:
+
+```bash
+ssh start9@your-startos-hostname.local
+```
+
+Example:
+
+```bash
+ssh start9@potent-sip.local
+```
+
+### 2. Open the LND config file
+
+```bash
+sudo nano /embassy-data/package-data/volumes/lnd/data/lnd/lnd.conf
+```
+
+### 3. Add the following lines
 
 ```ini
 protocol.custom-message=513
 protocol.custom-nodeann=39
 protocol.custom-init=39
 ```
+
+### 4. Save and exit nano
+
+* Press `CTRL+O`
+* Press `Enter`
+* Press `CTRL+X`
+
+### 5. Restart LND
+
+Restart the LND service from the StartOS UI.
+
+### 6. Requirements for BOLT12 offers
+
+Creating BOLT12 offers also requires:
+
+* at least one active public Lightning channel
+* a fully synced LND node
+
+Without onion messages enabled, the rest of the app still works, but BOLT12 offers will not function.
 
 Add them to your LND node's configuration and **restart LND** before starting BOLT12 Pay. Creating BOLT12 offers also requires at least one active public Lightning channel. Without onion messages enabled, the rest of the app works but BOLT12 offers will not.
 
