@@ -8,6 +8,6 @@ export const v_0_2_94_0 = VersionInfo.of({
   },
   migrations: {
     up: async () => {},
-    down: IMPOSSIBLE,
+    down: async () => {},
   },
 })
