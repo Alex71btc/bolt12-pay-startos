@@ -2,19 +2,21 @@
 
 ## Documentation
 
-- [lndk-pay on GitHub](https://github.com/Alex71btc/lndk-pay) — the upstream project.
-- [LNDK](https://github.com/lndk-org/lndk) — the BOLT12 runtime BOLT12 Pay embeds.
+* [lndk-pay on GitHub](https://github.com/Alex71btc/lndk-pay) — the upstream project.
+* [LNDK](https://github.com/lndk-org/lndk) — the BOLT12 runtime BOLT12 Pay embeds.
 
 ## What you get on StartOS
 
-- A **Web UI** for a self-hosted Lightning payment endpoint: create and pay **BOLT12 offers**, plus **LNURL**, **Lightning Address** (BIP353), and **BOLT11** support.
-- An embedded **LNDK** runtime that talks to your StartOS **LND** node to handle BOLT12 offers and payments.
+* A **Web UI** for a self-hosted Lightning payment endpoint: create and pay **BOLT12 offers**, plus **LNURL**, **Lightning Address** (BIP353), and **BOLT11** support.
+* An embedded **LNDK** runtime that talks to your StartOS **LND** node to handle BOLT12 offers and payments.
 
 ## Before you start: enable onion messages on LND
 
 BOLT12 offers require onion-message support on your LND node.
 
 The current StartOS LND package does not expose these settings in the UI yet, so they must be added manually to `lnd.conf`.
+
+These settings only need to be configured once and persist across LND restarts.
 
 ### 1. SSH into your StartOS server
 
@@ -33,10 +35,16 @@ ssh start9@potent-sip.local
 ### 2. Open the LND config file
 
 ```bash
-sudo nano /embassy-data/package-data/volumes/lnd/data/lnd/lnd.conf
+start-cli package attach lnd
+
+vi /root/.lnd/lnd.conf
 ```
 
-### 3. Add the following lines
+Enter insert mode:
+
+* Press `i`
+
+### 3. Add the following lines at the end
 
 ```ini
 protocol.custom-message=513
@@ -44,11 +52,15 @@ protocol.custom-nodeann=39
 protocol.custom-init=39
 ```
 
-### 4. Save and exit nano
+### 4. Save and exit vi
 
-* Press `CTRL+O`
-* Press `Enter`
-* Press `CTRL+X`
+Press `ESC`, then type:
+
+```text
+:wq
+```
+
+and press `ENTER`.
 
 ### 5. Restart LND
 
@@ -62,8 +74,6 @@ Creating BOLT12 offers also requires:
 * a fully synced LND node
 
 Without onion messages enabled, the rest of the app still works, but BOLT12 offers will not function.
-
-Add them to your LND node's configuration and **restart LND** before starting BOLT12 Pay. Creating BOLT12 offers also requires at least one active public Lightning channel. Without onion messages enabled, the rest of the app works but BOLT12 offers will not.
 
 ## Getting set up
 
@@ -83,3 +93,4 @@ For Tor or LAN-only use, BOLT12 offers and BOLT11 still work; only the public LN
 ## Using BOLT12 Pay
 
 The Web UI is the application itself — create offers, generate payment pages, and manage LNURL / Lightning Address settings. The upstream documentation applies once you're in.
+
