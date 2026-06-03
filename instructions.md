@@ -33,10 +33,15 @@ ssh start9@potent-sip.local
 ### 2. Open the LND config file
 
 ```bash
-sudo nano /embassy-data/package-data/volumes/lnd/data/lnd/lnd.conf
+start-cli package attach lnd
+
+vi /root/.lnd/lnd.conf
 ```
 
-### 3. Add the following lines
+* Press:
+* i    (insert mode)
+
+### 3. Add the following lines at the end:
 
 ```ini
 protocol.custom-message=513
@@ -44,11 +49,12 @@ protocol.custom-nodeann=39
 protocol.custom-init=39
 ```
 
-### 4. Save and exit nano
+### 4. Save and exit vi
 
-* Press `CTRL+O`
-* Press `Enter`
-* Press `CTRL+X`
+* Save:
+* ESC
+* :wq
+* ENTER
 
 ### 5. Restart LND
 
