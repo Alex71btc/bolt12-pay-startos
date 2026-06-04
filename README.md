@@ -96,21 +96,14 @@ Pick one of the service's non-local URLs (use a **clearnet or custom-domain** UR
 | Property | Value |
 |----------|-------|
 | **Required** | Yes |
-| **Version constraint** | `>=0.20.1-beta:2` |
 | **Health checks** | `lnd` must pass |
 | **Mounted volumes** | `lnd:main` at `/mnt/lnd` (read-only) — TLS cert and admin macaroon |
 | **Reached at** | `lnd.startos` (REST `:8080`, gRPC `:10009`) |
 | **Purpose** | Create and pay BOLT12 offers via LNDK |
 
-**LND must have onion-message support enabled.** BOLT12 offers require the following in `lnd.conf`, which is not set by the stock StartOS LND package and must be added manually:
+**LND must have onion-message support enabled.** BOLT12 offers require `protocol.custom-message=513`, `protocol.custom-nodeann=39`, and `protocol.custom-init=39` in `lnd.conf`. BOLT12 Pay configures this automatically: on startup it posts a task against LND's hidden **Auto-Configure** action, which the user approves with one click — no manual `lnd.conf` editing. The task uses `input-not-matches`, so it clears once the settings are present and reappears if they are ever removed.
 
-```ini
-protocol.custom-message=513
-protocol.custom-nodeann=39
-protocol.custom-init=39
-```
-
-See [instructions.md](./instructions.md) for the exact steps.
+See [instructions.md](./instructions.md) for the user-facing steps.
 
 ---
 
@@ -134,7 +127,7 @@ LND credentials are not backed up here; they live on the LND package and are re-
 
 ## Limitations and Differences
 
-1. **Manual LND configuration** — the `protocol.custom-*` options above must be added to `lnd.conf` by hand; BOLT12 offers will not work without them.
+1. **LND onion messages** — BOLT12 offers require LND's `protocol.custom-*` settings; BOLT12 Pay enables them via a one-click **Auto-Configure** task on LND (no manual `lnd.conf` editing). Requires an LND package recent enough to expose the Auto-Configure action.
 2. **LNURL base URL** — seeded from the **Set Primary URL** action; the in-app admin settings can still override it. All other app configuration is done inside the web UI.
 3. **Mainnet only** — the LND macaroon path is pinned to `data/chain/bitcoin/mainnet`.
 
@@ -162,7 +155,9 @@ dependency_mounts:
 ports:
   ui: 8081
 dependencies:
-  - lnd (required, >=0.20.1-beta:2, needs protocol.custom-message=513/nodeann=39/init=39)
+  - lnd (required; onion messages enabled via a one-click task against lnd's hidden `autoconfig` action — writes protocol.custom-message=513/nodeann=39/init=39)
 actions:
   - set-primary-url
+tasks_posted:
+  - lnd/autoconfig (critical, input-not-matches: { onion-messages: true })
 ```
