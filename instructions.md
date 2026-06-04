@@ -14,59 +14,11 @@
 
 BOLT12 offers require onion-message support on your LND node.
 
-The current StartOS LND package does not expose these settings in the UI yet, so they must be added manually to `lnd.conf`.
+You no longer need to edit `lnd.conf` by hand. When BOLT12 Pay starts, it posts a one-click task to your LND service. Open **LND** (or follow the prompt from BOLT12 Pay's dependency status) and approve LND's **Auto-Configure** task: LND writes the required onion-message settings (`protocol.custom-message=513`, `protocol.custom-nodeann=39`, `protocol.custom-init=39`) to `lnd.conf` for you.
 
-These settings only need to be configured once and persist across LND restarts.
+The settings persist across LND restarts. The task clears automatically once they're set and reappears if they're ever removed, so you can always re-enable onion messages with one click. This requires an LND package recent enough to expose the Auto-Configure action.
 
-### 1. SSH into your StartOS server
-
-From another computer:
-
-```bash
-ssh start9@your-startos-hostname.local
-```
-
-Example:
-
-```bash
-ssh start9@potent-sip.local
-```
-
-### 2. Open the LND config file
-
-```bash
-start-cli package attach lnd
-
-vi /root/.lnd/lnd.conf
-```
-
-Enter insert mode:
-
-* Press `i`
-
-### 3. Add the following lines at the end
-
-```ini
-protocol.custom-message=513
-protocol.custom-nodeann=39
-protocol.custom-init=39
-```
-
-### 4. Save and exit vi
-
-Press `ESC`, then type:
-
-```text
-:wq
-```
-
-and press `ENTER`.
-
-### 5. Restart LND
-
-Restart the LND service from the StartOS UI.
-
-### 6. Requirements for BOLT12 offers
+### Requirements for BOLT12 offers
 
 Creating BOLT12 offers also requires:
 
@@ -77,7 +29,7 @@ Without onion messages enabled, the rest of the app still works, but BOLT12 offe
 
 ## Getting set up
 
-1. Install and fully sync **LND**, with the onion-message options above enabled.
+1. Install and fully sync **LND**, then approve the onion-message task described above.
 2. Install **BOLT12 Pay** and start it. It connects to LND automatically at `lnd.startos` using the read-only credentials mounted from the LND package — no macaroon copying required.
 3. Open the **Web UI** interface.
 
