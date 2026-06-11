@@ -4,7 +4,7 @@ export const current = VersionInfo.of({
   version: '0.2.104:0',
   releaseNotes: {
     en_US:
-      'Updated bundled lndk-pay to 0.2.104. Added authenticated payment API checks and CSRF protection. Includes previous relay cleanup and support for private/local ws:// relays.',
+      'Updated bundled lndk-pay to 0.2.104. Added authenticated payment API checks and CSRF protection. Added domain configuration documentation for BIP353, LNURL and Cloudflare DNS setup.',
   },
   migrations: {
     up: async () => {},
