@@ -1,4 +1,4 @@
-FROM alex71btc/lndk:start9-20260402 AS lndkstage
+FROM alex71btc/lndk:amountless-fix-v2 AS lndkstage
 
 FROM python:3.11-slim
 
