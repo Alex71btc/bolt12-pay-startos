@@ -42,6 +42,25 @@ LNURL, Lightning Address, and `.well-known` endpoints only resolve when BOLT12 P
 
 For Tor or LAN-only use, BOLT12 offers and BOLT11 still work; only the public LNURL / Lightning Address flows need a public hostname.
 
+### Domain configuration guide
+
+When using Cloudflare DNS automation, Lightning Address (BIP353), or LNURL, make sure you understand the difference between:
+
+* Cloudflare Zone Domain
+* BIP353 Address Domain
+* LNURL Domain/Subdomain
+
+Detailed setup instructions:
+
+https://github.com/Alex71btc/lndk-pay/blob/main/README.md#-domain-configuration-bip353-vs-lnurl
+
+The guide includes:
+
+* recommended domain structure
+* root domain vs subdomain examples
+* Cloudflare Zone configuration
+* common setup mistakes
+
 ## Using BOLT12 Pay
 
 The Web UI is the application itself — create offers, generate payment pages, and manage LNURL / Lightning Address settings. The upstream documentation applies once you're in.
