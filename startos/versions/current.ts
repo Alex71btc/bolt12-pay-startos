@@ -1,10 +1,11 @@
 import { VersionInfo, IMPOSSIBLE } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '0.2.104:0',
+  version: '0.2.106:0',
+
   releaseNotes: {
     en_US:
-      'Updated bundled lndk-pay to 0.2.104. Added authenticated payment API checks and CSRF protection. Added domain configuration documentation for BIP353, LNURL and Cloudflare DNS setup.',
+      'Added Privacy Mode. Optional BOLT12 + BIP353 only operation without LNURL endpoints. Improved setup UI and payment mode selection.',
   },
   migrations: {
     up: async () => {},
