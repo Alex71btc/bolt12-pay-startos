@@ -1,11 +1,11 @@
 import { VersionInfo, IMPOSSIBLE } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '0.2.105:1',
+  version: '0.2.106:0',
 
   releaseNotes: {
     en_US:
-      'Updated bundled lndk-pay to 0.2.105:1. Fixed amountless offer history entries showing "1 sat default" instead of "Amountless offer".',
+      'Added Privacy Mode. Optional BOLT12 + BIP353 only operation without LNURL endpoints. Improved setup UI and payment mode selection.',
   },
   migrations: {
     up: async () => {},
