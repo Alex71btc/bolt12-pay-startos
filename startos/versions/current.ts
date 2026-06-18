@@ -1,11 +1,11 @@
 import { VersionInfo, IMPOSSIBLE } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '0.2.108:0',
+  version: '0.2.108:1',
 
   releaseNotes: {
     en_US:
-      'Added BIP353 publishing from Offer History. Automatic DNS cleanup for BIP353 records when deleting history entries or clearing history. Create private BIP353 Lightning Addresses without exposing them on the public alias page. Includes Privacy Mode improvements.',
+      'Bugfix release for BOLT12 offer creation reliability. Automatically retries transient LNDK TLS connection failures and prevents occasional first-attempt offer creation errors observed on some Umbrel systems.',
   },
   migrations: {
     up: async () => {},
