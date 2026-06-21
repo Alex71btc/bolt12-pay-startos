@@ -1,11 +1,11 @@
 import { VersionInfo, IMPOSSIBLE } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '0.2.109:0',
+  version: '0.2.109:1',
 
   releaseNotes: {
     en_US:
-      'Native onion messaging support for LND v0.21.x, future-proof BOLT12 compatibility without custom protocol patches.',
+      'Use upstream native-onion-messages-v2 runtime. Adds LND 0.21 native onion messaging compatibility and latest amountless offer fixes.',
   },
   migrations: {
     up: async () => {},
