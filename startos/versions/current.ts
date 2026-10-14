@@ -1,56 +1,46 @@
 import { VersionInfo } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '0.3.7:0',
+  version: '0.3.8:0',
 
   releaseNotes: {
-    en_US: `BOLT12 payments now allow more time for an invoice response, improving reliability with slower wallets and onion-message routes.
+    en_US: `Reliable NIP-57 Zap receipts and Android push notifications are restored. BOLT12 Pay now advertises the same internal app signer that signs each receipt, so standards-validating clients such as Amethyst no longer reject later Zap notifications.
 
-Repeated invoice requests now reuse the same invoice instead of creating unpaid duplicates in LND.
+New Zap invoices now wake the publisher immediately, and active payments are checked about once per second instead of waiting for the previous 15-second polling interval. Relay publishing waits for actual acceptance acknowledgements, tolerates individual blocked or unavailable relays once another requested relay accepts the receipt, and safely reuses the same signed receipt when a retry is necessary.
 
-Outgoing BOLT12 payments appear as one Lightning Activity entry, including the routing fee, without an additional underlying BOLT11 payment row.
-
-The bundled LNDK runtime now supports LND 0.21 native onion messages on amd64 and arm64. Amountless offers and descriptive invoice memos remain supported.
+NWC connections sharing a relay now use one shared subscription, duplicate requests are ignored, and reconnects use bounded backoff. Lightning Activity remains responsive while avoiding overlapping LND history scans.
 
 Existing application data and payment history are preserved. No manual migration is required.`,
 
-    de_DE: `BOLT12-Zahlungen warten jetzt länger auf eine Rechnungsantwort. Das verbessert die Zuverlässigkeit bei langsameren Wallets und Onion-Message-Routen.
+    de_DE: `Zuverlässige NIP-57-Zap-Belege und Android-Push-Benachrichtigungen funktionieren wieder. BOLT12 Pay gibt nun denselben internen App-Signierer bekannt, mit dem jeder Beleg tatsächlich signiert wird. Dadurch verwerfen standardkonform prüfende Clients wie Amethyst spätere Zap-Benachrichtigungen nicht mehr.
 
-Wiederholte Rechnungsanfragen verwenden jetzt dieselbe Rechnung, statt unbezahlte Duplikate in LND zu erzeugen.
+Neue Zap-Rechnungen wecken den Publisher jetzt sofort, und aktive Zahlungen werden etwa einmal pro Sekunde statt im bisherigen 15-Sekunden-Intervall geprüft. Beim Veröffentlichen wird auf tatsächliche Relay-Bestätigungen gewartet. Einzelne blockierte oder nicht erreichbare Relays verhindern den Erfolg nicht mehr, sobald ein anderes angefragtes Relay den Beleg angenommen hat; bei notwendigen Wiederholungen wird derselbe signierte Beleg sicher wiederverwendet.
 
-Ausgehende BOLT12-Zahlungen erscheinen als ein einzelner Eintrag in der Lightning-Aktivität, einschließlich Routinggebühr und ohne zusätzlichen zugrunde liegenden BOLT11-Zahlungseintrag.
-
-Die mitgelieferte LNDK-Laufzeit unterstützt jetzt native Onion Messages von LND 0.21 auf amd64 und arm64. Betragsfreie Offers und aussagekräftige Rechnungsnotizen bleiben unterstützt.
+NWC-Verbindungen mit demselben Relay verwenden nun ein gemeinsames Abonnement, doppelte Anfragen werden ignoriert und Neuverbindungen nutzen eine begrenzte Wartezeitsteigerung. Die Lightning-Aktivität bleibt aktuell, ohne überlappende LND-Verlaufsabfragen auszuführen.
 
 Bestehende App-Daten und der Zahlungsverlauf bleiben erhalten. Keine manuelle Migration erforderlich.`,
 
-    es_ES: `Los pagos BOLT12 ahora esperan más tiempo una respuesta de factura, lo que mejora la fiabilidad con monederos y rutas de mensajes onion más lentos.
+    es_ES: `Se restablecen los recibos Zap NIP-57 fiables y las notificaciones push de Android. BOLT12 Pay ahora anuncia el mismo firmante interno de la aplicación que firma cada recibo, por lo que los clientes que validan el estándar, como Amethyst, ya no rechazan las notificaciones Zap posteriores.
 
-Las solicitudes de factura repetidas ahora reutilizan la misma factura en lugar de crear duplicados sin pagar en LND.
+Las nuevas facturas Zap ahora activan el publicador de inmediato y los pagos activos se comprueban aproximadamente una vez por segundo, en lugar de esperar el intervalo anterior de 15 segundos. La publicación espera confirmaciones reales de aceptación de los relays, tolera relays individuales bloqueados o no disponibles cuando otro relay solicitado acepta el recibo y reutiliza de forma segura el mismo recibo firmado cuando es necesario reintentar.
 
-Los pagos BOLT12 salientes aparecen como una sola entrada en la actividad Lightning, incluida la comisión de enrutamiento, sin una entrada adicional del pago BOLT11 subyacente.
-
-La versión incluida de LNDK ahora admite mensajes onion nativos de LND 0.21 en amd64 y arm64. Se mantienen las ofertas sin importe y las notas descriptivas de las facturas.
+Las conexiones NWC que comparten un relay ahora utilizan una sola suscripción, se ignoran las solicitudes duplicadas y las reconexiones usan una espera progresiva limitada. La actividad Lightning se mantiene actualizada sin superponer consultas al historial de LND.
 
 Se conservan los datos existentes de la aplicación y el historial de pagos. No se requiere migración manual.`,
 
-    fr_FR: `Les paiements BOLT12 attendent désormais plus longtemps une réponse de facture, ce qui améliore la fiabilité avec les portefeuilles et les routes de messages onion plus lents.
+    fr_FR: `Les reçus Zap NIP-57 fiables et les notifications push Android sont rétablis. BOLT12 Pay annonce désormais le même signataire interne de l'application que celui qui signe réellement chaque reçu. Les clients qui valident le standard, tels qu'Amethyst, ne rejettent donc plus les notifications Zap suivantes.
 
-Les demandes de facture répétées réutilisent maintenant la même facture au lieu de créer des doublons impayés dans LND.
+Les nouvelles factures Zap réveillent maintenant immédiatement le service de publication, et les paiements actifs sont vérifiés environ une fois par seconde au lieu d'attendre l'ancien intervalle de 15 secondes. La publication attend les confirmations réelles d'acceptation des relais, tolère un relais bloqué ou indisponible dès qu'un autre relais demandé accepte le reçu et réutilise en toute sécurité le même reçu signé lorsqu'une nouvelle tentative est nécessaire.
 
-Les paiements BOLT12 sortants apparaissent comme une seule entrée dans l'activité Lightning, frais de routage inclus, sans entrée supplémentaire pour le paiement BOLT11 sous-jacent.
-
-La version intégrée de LNDK prend désormais en charge les messages onion natifs de LND 0.21 sur amd64 et arm64. Les offres sans montant et les notes descriptives des factures restent prises en charge.
+Les connexions NWC partageant un relais utilisent désormais un seul abonnement, les requêtes en double sont ignorées et les reconnexions appliquent une attente progressive plafonnée. L'activité Lightning reste à jour sans chevauchement des consultations de l'historique LND.
 
 Les données existantes de l'application et l'historique des paiements sont conservés. Aucune migration manuelle n'est nécessaire.`,
 
-    pl_PL: `Płatności BOLT12 czekają teraz dłużej na odpowiedź z fakturą, co zwiększa niezawodność w przypadku wolniejszych portfeli i tras wiadomości onion.
+    pl_PL: `Przywrócono niezawodne potwierdzenia Zap NIP-57 i powiadomienia push w systemie Android. BOLT12 Pay ogłasza teraz ten sam wewnętrzny klucz podpisujący aplikacji, który faktycznie podpisuje każde potwierdzenie, dzięki czemu klienci sprawdzający zgodność ze standardem, tacy jak Amethyst, nie odrzucają już kolejnych powiadomień Zap.
 
-Powtarzające się żądania faktury wykorzystują teraz tę samą fakturę zamiast tworzyć nieopłacone duplikaty w LND.
+Nowe faktury Zap natychmiast uruchamiają publikowanie, a aktywne płatności są sprawdzane mniej więcej raz na sekundę zamiast oczekiwania na wcześniejszy 15-sekundowy interwał. Publikowanie czeka na rzeczywiste potwierdzenie przyjęcia przez przekaźnik, toleruje pojedyncze zablokowane lub niedostępne przekaźniki, gdy inny żądany przekaźnik przyjmie potwierdzenie, oraz bezpiecznie ponownie wykorzystuje to samo podpisane potwierdzenie, gdy konieczna jest kolejna próba.
 
-Wychodzące płatności BOLT12 są wyświetlane jako jeden wpis w aktywności Lightning, wraz z opłatą za trasowanie i bez dodatkowego wpisu bazowej płatności BOLT11.
-
-Dołączone środowisko LNDK obsługuje teraz natywne wiadomości onion w LND 0.21 na amd64 i arm64. Oferty bez określonej kwoty oraz opisowe notatki faktur pozostają obsługiwane.
+Połączenia NWC korzystające z tego samego przekaźnika używają teraz jednej wspólnej subskrypcji, zduplikowane żądania są ignorowane, a ponowne połączenia stosują ograniczone opóźnienie wykładnicze. Aktywność Lightning pozostaje aktualna bez nakładających się zapytań o historię LND.
 
 Istniejące dane aplikacji i historia płatności zostają zachowane. Ręczna migracja nie jest wymagana.`,
   },
