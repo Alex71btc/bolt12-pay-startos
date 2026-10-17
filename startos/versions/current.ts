@@ -1,48 +1,48 @@
 import { VersionInfo } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '0.3.8:0',
+  version: '0.3.13:0',
 
   releaseNotes: {
-    en_US: `Reliable NIP-57 Zap receipts and Android push notifications are restored. BOLT12 Pay now advertises the same internal app signer that signs each receipt, so standards-validating clients such as Amethyst no longer reject later Zap notifications.
+    en_US: `This release adds the new BOLT12 Pay Android Companion, available directly from the mobile Pay page. It accepts BOLT12 offers, BOLT11 invoices, Lightning Addresses and Amethyst BIP321 payment links, then safely transfers them to your own BOLT12 Pay server for review. Payments are never started automatically. The Companion is available in German and English, and its saved server configuration is preserved across normal app updates.
 
-New Zap invoices now wake the publisher immediately, and active payments are checked about once per second instead of waiting for the previous 15-second polling interval. Relay publishing waits for actual acceptance acknowledgements, tolerates individual blocked or unavailable relays once another requested relay accepts the receipt, and safely reuses the same signed receipt when a retry is necessary.
+Pay and Console are now one installable BOLT12 Pay PWA with a shared identity. This fixes mixed installation states, improves reinstall handling and provides separate standard and Android maskable launcher icons.
 
-NWC connections sharing a relay now use one shared subscription, duplicate requests are ignored, and reconnects use bounded backoff. Lightning Activity remains responsive while avoiding overlapping LND history scans.
+PWA installation requires your configured HTTPS address and a normal Chrome or Chromium tab. Firefox on Linux does not currently offer the same direct installation flow. On Android, open the Pay page directly in Chrome instead of an embedded app window. If separate BOLT12 Pay and BOLT12 Console web apps from an earlier version are still installed, remove both once, reload the Pay page and install the single BOLT12 Pay app again.
 
-Existing application data and payment history are preserved. No manual migration is required.`,
+Existing application data, aliases, identities and payment history are preserved. No manual migration is required.`,
 
-    de_DE: `Zuverlässige NIP-57-Zap-Belege und Android-Push-Benachrichtigungen funktionieren wieder. BOLT12 Pay gibt nun denselben internen App-Signierer bekannt, mit dem jeder Beleg tatsächlich signiert wird. Dadurch verwerfen standardkonform prüfende Clients wie Amethyst spätere Zap-Benachrichtigungen nicht mehr.
+    de_DE: `Dieses Release fügt den neuen BOLT12 Pay Android Companion hinzu, der direkt auf der mobilen Pay-Seite angeboten wird. Er übernimmt BOLT12-Offers, BOLT11-Rechnungen, Lightning-Adressen und Amethyst-BIP321-Zahlungslinks und überträgt sie zur sicheren Prüfung an deinen eigenen BOLT12-Pay-Server. Zahlungen werden niemals automatisch gestartet. Der Companion ist auf Deutsch und Englisch verfügbar; seine gespeicherte Serverkonfiguration bleibt bei normalen App-Updates erhalten.
 
-Neue Zap-Rechnungen wecken den Publisher jetzt sofort, und aktive Zahlungen werden etwa einmal pro Sekunde statt im bisherigen 15-Sekunden-Intervall geprüft. Beim Veröffentlichen wird auf tatsächliche Relay-Bestätigungen gewartet. Einzelne blockierte oder nicht erreichbare Relays verhindern den Erfolg nicht mehr, sobald ein anderes angefragtes Relay den Beleg angenommen hat; bei notwendigen Wiederholungen wird derselbe signierte Beleg sicher wiederverwendet.
+Pay und Console sind jetzt eine einzige installierbare BOLT12-Pay-PWA mit gemeinsamer Identität. Das behebt gemischte Installationszustände, verbessert Neuinstallationen und stellt getrennte Standard- und Android-Maskable-App-Symbole bereit.
 
-NWC-Verbindungen mit demselben Relay verwenden nun ein gemeinsames Abonnement, doppelte Anfragen werden ignoriert und Neuverbindungen nutzen eine begrenzte Wartezeitsteigerung. Die Lightning-Aktivität bleibt aktuell, ohne überlappende LND-Verlaufsabfragen auszuführen.
+Für die PWA-Installation wird deine eingerichtete HTTPS-Adresse und ein normaler Chrome- oder Chromium-Tab benötigt. Firefox unter Linux bietet diesen direkten Installationsablauf derzeit nicht an. Öffne die Pay-Seite unter Android direkt in Chrome statt in einem eingebetteten App-Fenster. Falls aus einer älteren Version noch getrennte Web-Apps für BOLT12 Pay und BOLT12 Console installiert sind, entferne beide einmal, lade die Pay-Seite neu und installiere anschließend die gemeinsame BOLT12-Pay-App.
 
-Bestehende App-Daten und der Zahlungsverlauf bleiben erhalten. Keine manuelle Migration erforderlich.`,
+Bestehende App-Daten, Aliase, Identitäten und der Zahlungsverlauf bleiben erhalten. Keine manuelle Migration erforderlich.`,
 
-    es_ES: `Se restablecen los recibos Zap NIP-57 fiables y las notificaciones push de Android. BOLT12 Pay ahora anuncia el mismo firmante interno de la aplicación que firma cada recibo, por lo que los clientes que validan el estándar, como Amethyst, ya no rechazan las notificaciones Zap posteriores.
+    es_ES: `Esta versión añade el nuevo Companion de BOLT12 Pay para Android, disponible directamente desde la página Pay en dispositivos móviles. Acepta ofertas BOLT12, facturas BOLT11, direcciones Lightning y enlaces de pago BIP321 de Amethyst, y los transfiere de forma segura a tu propio servidor BOLT12 Pay para que los revises. Los pagos nunca se inician automáticamente. El Companion está disponible en alemán e inglés y conserva la configuración guardada del servidor durante las actualizaciones normales de la aplicación.
 
-Las nuevas facturas Zap ahora activan el publicador de inmediato y los pagos activos se comprueban aproximadamente una vez por segundo, en lugar de esperar el intervalo anterior de 15 segundos. La publicación espera confirmaciones reales de aceptación de los relays, tolera relays individuales bloqueados o no disponibles cuando otro relay solicitado acepta el recibo y reutiliza de forma segura el mismo recibo firmado cuando es necesario reintentar.
+Pay y Console son ahora una única PWA instalable de BOLT12 Pay con una identidad compartida. Esto corrige estados de instalación mezclados, mejora la reinstalación e incluye iconos separados estándar y adaptables para Android.
 
-Las conexiones NWC que comparten un relay ahora utilizan una sola suscripción, se ignoran las solicitudes duplicadas y las reconexiones usan una espera progresiva limitada. La actividad Lightning se mantiene actualizada sin superponer consultas al historial de LND.
+La instalación de la PWA requiere la dirección HTTPS configurada y una pestaña normal de Chrome o Chromium. Firefox en Linux no ofrece actualmente el mismo proceso de instalación directa. En Android, abre la página Pay directamente en Chrome en lugar de una ventana de aplicación integrada. Si todavía tienes instaladas por separado las aplicaciones web BOLT12 Pay y BOLT12 Console de una versión anterior, elimina ambas una vez, vuelve a cargar la página Pay e instala la aplicación BOLT12 Pay unificada.
 
-Se conservan los datos existentes de la aplicación y el historial de pagos. No se requiere migración manual.`,
+Se conservan los datos, alias, identidades e historial de pagos existentes. No se requiere migración manual.`,
 
-    fr_FR: `Les reçus Zap NIP-57 fiables et les notifications push Android sont rétablis. BOLT12 Pay annonce désormais le même signataire interne de l'application que celui qui signe réellement chaque reçu. Les clients qui valident le standard, tels qu'Amethyst, ne rejettent donc plus les notifications Zap suivantes.
+    fr_FR: `Cette version ajoute le nouveau Companion Android de BOLT12 Pay, proposé directement depuis la page Pay sur mobile. Il accepte les offres BOLT12, les factures BOLT11, les adresses Lightning et les liens de paiement BIP321 d'Amethyst, puis les transmet en toute sécurité à votre propre serveur BOLT12 Pay pour vérification. Aucun paiement n'est jamais lancé automatiquement. Le Companion est disponible en allemand et en anglais, et sa configuration serveur enregistrée est conservée lors des mises à jour normales de l'application.
 
-Les nouvelles factures Zap réveillent maintenant immédiatement le service de publication, et les paiements actifs sont vérifiés environ une fois par seconde au lieu d'attendre l'ancien intervalle de 15 secondes. La publication attend les confirmations réelles d'acceptation des relais, tolère un relais bloqué ou indisponible dès qu'un autre relais demandé accepte le reçu et réutilise en toute sécurité le même reçu signé lorsqu'une nouvelle tentative est nécessaire.
+Pay et Console forment désormais une seule PWA BOLT12 Pay installable avec une identité commune. Cela corrige les états d'installation incohérents, améliore la réinstallation et fournit des icônes distinctes standard et adaptatives pour Android.
 
-Les connexions NWC partageant un relais utilisent désormais un seul abonnement, les requêtes en double sont ignorées et les reconnexions appliquent une attente progressive plafonnée. L'activité Lightning reste à jour sans chevauchement des consultations de l'historique LND.
+L'installation de la PWA nécessite l'adresse HTTPS configurée et un onglet normal de Chrome ou Chromium. Firefox sous Linux ne propose pas actuellement le même parcours d'installation directe. Sous Android, ouvrez la page Pay directement dans Chrome plutôt que dans une fenêtre d'application intégrée. Si les applications web BOLT12 Pay et BOLT12 Console d'une version précédente sont encore installées séparément, supprimez-les une fois, rechargez la page Pay, puis installez l'application BOLT12 Pay unifiée.
 
-Les données existantes de l'application et l'historique des paiements sont conservés. Aucune migration manuelle n'est nécessaire.`,
+Les données, alias, identités et l'historique des paiements existants sont conservés. Aucune migration manuelle n'est nécessaire.`,
 
-    pl_PL: `Przywrócono niezawodne potwierdzenia Zap NIP-57 i powiadomienia push w systemie Android. BOLT12 Pay ogłasza teraz ten sam wewnętrzny klucz podpisujący aplikacji, który faktycznie podpisuje każde potwierdzenie, dzięki czemu klienci sprawdzający zgodność ze standardem, tacy jak Amethyst, nie odrzucają już kolejnych powiadomień Zap.
+    pl_PL: `Ta wersja dodaje nową aplikację BOLT12 Pay Companion dla systemu Android, dostępną bezpośrednio na mobilnej stronie Pay. Przyjmuje oferty BOLT12, faktury BOLT11, adresy Lightning oraz linki płatnicze BIP321 z Amethyst, a następnie bezpiecznie przekazuje je do własnego serwera BOLT12 Pay do sprawdzenia. Płatności nigdy nie są uruchamiane automatycznie. Companion jest dostępny w języku niemieckim i angielskim, a zapisana konfiguracja serwera pozostaje zachowana podczas zwykłych aktualizacji aplikacji.
 
-Nowe faktury Zap natychmiast uruchamiają publikowanie, a aktywne płatności są sprawdzane mniej więcej raz na sekundę zamiast oczekiwania na wcześniejszy 15-sekundowy interwał. Publikowanie czeka na rzeczywiste potwierdzenie przyjęcia przez przekaźnik, toleruje pojedyncze zablokowane lub niedostępne przekaźniki, gdy inny żądany przekaźnik przyjmie potwierdzenie, oraz bezpiecznie ponownie wykorzystuje to samo podpisane potwierdzenie, gdy konieczna jest kolejna próba.
+Pay i Console są teraz jedną instalowalną aplikacją PWA BOLT12 Pay ze wspólną tożsamością. Rozwiązuje to problem mieszanych stanów instalacji, usprawnia ponowną instalację oraz zapewnia osobne standardowe i adaptacyjne ikony dla systemu Android.
 
-Połączenia NWC korzystające z tego samego przekaźnika używają teraz jednej wspólnej subskrypcji, zduplikowane żądania są ignorowane, a ponowne połączenia stosują ograniczone opóźnienie wykładnicze. Aktywność Lightning pozostaje aktualna bez nakładających się zapytań o historię LND.
+Instalacja PWA wymaga skonfigurowanego adresu HTTPS oraz zwykłej karty Chrome lub Chromium. Firefox w systemie Linux nie oferuje obecnie takiego samego bezpośredniego procesu instalacji. W systemie Android otwórz stronę Pay bezpośrednio w Chrome zamiast we wbudowanym oknie aplikacji. Jeśli z poprzedniej wersji nadal są zainstalowane osobne aplikacje internetowe BOLT12 Pay i BOLT12 Console, usuń obie, ponownie załaduj stronę Pay, a następnie zainstaluj jedną wspólną aplikację BOLT12 Pay.
 
-Istniejące dane aplikacji i historia płatności zostają zachowane. Ręczna migracja nie jest wymagana.`,
+Istniejące dane aplikacji, aliasy, tożsamości i historia płatności zostają zachowane. Ręczna migracja nie jest wymagana.`,
   },
 
   migrations: {
