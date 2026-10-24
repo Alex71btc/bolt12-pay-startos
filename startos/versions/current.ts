@@ -1,38 +1,48 @@
 import { VersionInfo } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '0.3.15:0',
+  version: '0.3.16:0',
 
   releaseNotes: {
-    en_US: `Incoming BOLT12 payer notes are now displayed in Lightning Activity separately from the offer memo, including messages from Phoenix and phoenixd. Unicode, emojis, long messages and line breaks are preserved without additional application-level truncation. Notes remain searchable and are retained after restarts.
+    en_US: `Security maintenance release.
 
-Includes updated LNDK server and CLI builds while preserving native Onion Messages, amountless offers, offer memos and invoice reuse.
+Updated rustls-webpki to 0.103.16 for the eMudhra certificate distrust fix, along with rustls, h2, tokio and anyhow. Updated LNDK server and CLI builds for AMD64 and ARM64.
 
-Existing application data, payment history, NWC connections, aliases, identities and Keysend messages are preserved. Migration is automatic; notes discarded by older versions cannot be recovered. The signed Android Companion remains unchanged. Run only one LNDK instance per LND node.`,
+No feature changes or manual migration required. Existing application data, payment history, NWC connections, Lightning Addresses and Nostr identities are preserved. Android Companion remains unchanged.
 
-    de_DE: `Eingehende BOLT12-Zahlungsnachrichten werden jetzt in der Lightning-Aktivität getrennt vom Offer-Memo angezeigt, auch Nachrichten von Phoenix und phoenixd. Unicode, Emojis, lange Nachrichten und Zeilenumbrüche bleiben ohne zusätzliche Kürzung durch die Anwendung erhalten. Die Nachrichten sind durchsuchbar und bleiben nach Neustarts gespeichert.
+BOLT12 incoming and outgoing payments, Phoenix payer notes and NWC were successfully tested.`,
 
-Enthält aktualisierte LNDK-Server- und CLI-Builds. Native Onion Messages, betragsfreie Offers, Offer-Memos und die Wiederverwendung von Rechnungen bleiben erhalten.
+    de_DE: `Sicherheits- und Wartungsupdate.
 
-Bestehende App-Daten, Zahlungsverlauf, NWC-Verbindungen, Aliase, Identitäten und Keysend-Nachrichten bleiben erhalten. Die Migration erfolgt automatisch; von älteren Versionen verworfene Nachrichten können nicht wiederhergestellt werden. Der signierte Android Companion bleibt unverändert. Pro LND-Node darf nur eine LNDK-Instanz laufen.`,
+rustls-webpki wurde auf 0.103.16 aktualisiert, einschließlich der Korrektur zum Vertrauensentzug für eMudhra-Zertifikate. Auch rustls, h2, tokio und anyhow wurden aktualisiert. Neue LNDK-Server- und CLI-Builds für AMD64 und ARM64.
 
-    es_ES: `Las notas de pago BOLT12 entrantes ahora aparecen en la actividad Lightning por separado de la descripción de la oferta, incluidos los mensajes de Phoenix y phoenixd. Se conservan Unicode, emojis, mensajes largos y saltos de línea sin truncamiento adicional de la aplicación. Las notas se pueden buscar y permanecen guardadas después de reiniciar.
+Keine Funktionsänderungen und keine manuelle Migration erforderlich. Bestehende App-Daten, Zahlungsverläufe, NWC-Verbindungen, Lightning-Adressen und Nostr-Identitäten bleiben erhalten. Der Android Companion bleibt unverändert.
 
-Incluye versiones actualizadas del servidor y la CLI de LNDK, manteniendo Onion Messages nativos, ofertas sin importe fijo, descripciones de ofertas y reutilización de facturas.
+Ein- und ausgehende BOLT12-Zahlungen, Phoenix-Zahlungsnachrichten und NWC wurden erfolgreich getestet.`,
 
-Se conservan los datos, el historial de pagos, las conexiones NWC, los alias, las identidades y los mensajes Keysend. La migración es automática; las notas descartadas por versiones anteriores no se pueden recuperar. Android Companion no cambia. Utilice solo una instancia de LNDK por nodo LND.`,
+    es_ES: `Actualización de seguridad y mantenimiento.
 
-    fr_FR: `Les notes de paiement BOLT12 entrantes apparaissent désormais dans l'activité Lightning séparément du mémo de l'offre, y compris les messages de Phoenix et phoenixd. Unicode, les emojis, les messages longs et les sauts de ligne sont conservés sans troncature supplémentaire par l'application. Les notes restent consultables et sont conservées après redémarrage.
+Se actualizó rustls-webpki a 0.103.16 para incorporar la corrección de desconfianza de certificados eMudhra, junto con rustls, h2, tokio y anyhow. Se actualizaron el servidor y la CLI de LNDK para AMD64 y ARM64.
 
-Inclut des versions actualisées du serveur et de la CLI LNDK, tout en conservant les Onion Messages natifs, les offres sans montant fixe, les mémos d'offre et la réutilisation des factures.
+Sin cambios funcionales ni migración manual. Se conservan los datos, el historial de pagos, las conexiones NWC, las direcciones Lightning y las identidades Nostr. Android Companion no cambia.
 
-Les données, l'historique des paiements, les connexions NWC, les alias, les identités et les messages Keysend sont conservés. La migration est automatique ; les notes supprimées par les anciennes versions ne peuvent pas être récupérées. Android Companion reste inchangé. N'utilisez qu'une seule instance LNDK par nœud LND.`,
+Se probaron correctamente los pagos BOLT12 entrantes y salientes, las notas de Phoenix y NWC.`,
 
-    pl_PL: `Przychodzące wiadomości płatnicze BOLT12 są teraz wyświetlane w historii Lightning oddzielnie od opisu oferty, w tym wiadomości z Phoenix i phoenixd. Unicode, emoji, długie wiadomości i podziały wierszy są zachowywane bez dodatkowego skracania przez aplikację. Wiadomości można wyszukiwać i pozostają zapisane po ponownym uruchomieniu.
+    fr_FR: `Mise à jour de sécurité et de maintenance.
 
-Zawiera zaktualizowane wersje serwera i CLI LNDK, zachowując natywne Onion Messages, oferty bez ustalonej kwoty, opisy ofert i ponowne wykorzystanie faktur.
+rustls-webpki passe à 0.103.16 avec le correctif de défiance des certificats eMudhra. rustls, h2, tokio et anyhow ont également été mis à jour. Nouvelles versions du serveur et de la CLI LNDK pour AMD64 et ARM64.
 
-Dane aplikacji, historia płatności, połączenia NWC, aliasy, tożsamości i wiadomości Keysend pozostają zachowane. Migracja jest automatyczna; wiadomości odrzuconych przez starsze wersje nie można odzyskać. Android Companion pozostaje bez zmian. Na jeden węzeł LND należy uruchamiać tylko jedną instancję LNDK.`,
+Aucun changement fonctionnel ni migration manuelle. Les données, l'historique des paiements, les connexions NWC, les adresses Lightning et les identités Nostr sont conservés. Android Companion reste inchangé.
+
+Les paiements BOLT12 entrants et sortants, les notes Phoenix et NWC ont été testés avec succès.`,
+
+    pl_PL: `Aktualizacja bezpieczeństwa i konserwacji.
+
+Zaktualizowano rustls-webpki do wersji 0.103.16 z poprawką dotyczącą wycofania zaufania do certyfikatów eMudhra, a także rustls, h2, tokio i anyhow. Zaktualizowano serwer i CLI LNDK dla AMD64 i ARM64.
+
+Bez zmian funkcjonalnych i bez ręcznej migracji. Dane aplikacji, historia płatności, połączenia NWC, adresy Lightning i tożsamości Nostr pozostają zachowane. Android Companion pozostaje bez zmian.
+
+Pomyślnie przetestowano płatności BOLT12 w obu kierunkach, wiadomości Phoenix oraz NWC.`,
   },
 
   migrations: {
