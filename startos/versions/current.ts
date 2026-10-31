@@ -1,48 +1,93 @@
 import { VersionInfo } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '0.3.16:0',
+  version: '0.3.18:0',
 
   releaseNotes: {
-    en_US: `Security maintenance release.
+    en_US: `BOLT12 Pay 0.3.18 — Payment and Login UX Improvements
 
-Updated rustls-webpki to 0.103.16 for the eMudhra certificate distrust fix, along with rustls, h2, tokio and anyhow. Updated LNDK server and CLI builds for AMD64 and ARM64.
+v0.3.17 — Payments
+- Submit payments with Enter, preserving validation and duplicate-payment protection.
+- Compact QR scanner, clipboard and saved-contact controls beside the Pay field.
+- Smart clipboard detection for BOLT12, BOLT11, LNURL, Lightning Addresses and node public keys.
+- Copy Lightning Addresses and BOLT12 offers directly from the Pay field.
+- Improved saved-contact detection, mobile notifications and clipboard fallback.
 
-No feature changes or manual migration required. Existing application data, payment history, NWC connections, Lightning Addresses and Nostr identities are preserved. Android Companion remains unchanged.
+v0.3.18 — Login
+- Submit login using Enter, the mobile keyboard action or the Login button.
+- Improved automatic login with saved Chrome password-manager credentials on Android.
+- Prevent duplicate login requests and validate empty submissions.
+- Improved localized error messages, rate-limit feedback and safe redirects.
 
-BOLT12 incoming and outgoing payments, Phoenix payer notes and NWC were successfully tested.`,
+No manual migration required. Existing offers, payment history, Lightning Addresses, Nostr identities and NWC connections are preserved. LNDK remains at 0.3.16. Android Companion remains unchanged.`,
 
-    de_DE: `Sicherheits- und Wartungsupdate.
+    de_DE: `BOLT12 Pay 0.3.18 — Verbesserungen für Zahlungen und Anmeldung
 
-rustls-webpki wurde auf 0.103.16 aktualisiert, einschließlich der Korrektur zum Vertrauensentzug für eMudhra-Zertifikate. Auch rustls, h2, tokio und anyhow wurden aktualisiert. Neue LNDK-Server- und CLI-Builds für AMD64 und ARM64.
+v0.3.17 — Zahlungen
+- Zahlungen direkt mit Enter starten, inklusive Validierung und Schutz vor Doppelzahlungen.
+- Kompakte Schaltflächen für QR-Scanner, Zwischenablage und Kontakte neben dem Zahlungsfeld.
+- Automatische Erkennung von BOLT12, BOLT11, LNURL, Lightning-Adressen und Node-Public-Keys aus der Zwischenablage.
+- Lightning-Adressen und BOLT12-Offers direkt aus dem Zahlungsfeld kopieren.
+- Verbesserte Kontakterkennung, mobile Benachrichtigungen und Zwischenablage-Fallbacks.
 
-Keine Funktionsänderungen und keine manuelle Migration erforderlich. Bestehende App-Daten, Zahlungsverläufe, NWC-Verbindungen, Lightning-Adressen und Nostr-Identitäten bleiben erhalten. Der Android Companion bleibt unverändert.
+v0.3.18 — Anmeldung
+- Anmeldung mit Enter, der mobilen Tastaturaktion oder dem Login-Button.
+- Verbesserte automatische Anmeldung mit gespeicherten Chrome-Passwörtern unter Android.
+- Schutz vor doppelten Login-Anfragen und Validierung leerer Eingaben.
+- Verbesserte übersetzte Fehlermeldungen, Sperrzeit-Anzeigen und sichere Weiterleitungen.
 
-Ein- und ausgehende BOLT12-Zahlungen, Phoenix-Zahlungsnachrichten und NWC wurden erfolgreich getestet.`,
+Keine manuelle Datenmigration erforderlich. Bestehende Offers, Zahlungsverläufe, Lightning-Adressen, Nostr-Identitäten und NWC-Verbindungen bleiben erhalten. LNDK bleibt auf 0.3.16. Der Android Companion bleibt unverändert.`,
 
-    es_ES: `Actualización de seguridad y mantenimiento.
+    es_ES: `BOLT12 Pay 0.3.18 — Mejoras en pagos e inicio de sesión
 
-Se actualizó rustls-webpki a 0.103.16 para incorporar la corrección de desconfianza de certificados eMudhra, junto con rustls, h2, tokio y anyhow. Se actualizaron el servidor y la CLI de LNDK para AMD64 y ARM64.
+v0.3.17 — Pagos
+- Enviar pagos con Enter, manteniendo la validación y la protección contra pagos duplicados.
+- Accesos directos al escáner QR, portapapeles y contactos junto al campo de pago.
+- Detección de BOLT12, BOLT11, LNURL, direcciones Lightning y claves públicas de nodos.
+- Copiar direcciones Lightning y ofertas BOLT12 directamente desde el campo de pago.
+- Mejoras en contactos guardados, avisos móviles y alternativas del portapapeles.
 
-Sin cambios funcionales ni migración manual. Se conservan los datos, el historial de pagos, las conexiones NWC, las direcciones Lightning y las identidades Nostr. Android Companion no cambia.
+v0.3.18 — Inicio de sesión
+- Iniciar sesión con Enter, el teclado móvil o el botón Login.
+- Inicio de sesión automático mejorado con contraseñas guardadas en Chrome para Android.
+- Protección contra solicitudes duplicadas y validación de campos vacíos.
+- Mejoras en mensajes de error traducidos, límites de intentos y redirecciones seguras.
 
-Se probaron correctamente los pagos BOLT12 entrantes y salientes, las notas de Phoenix y NWC.`,
+No se requiere migración manual. Se conservan las ofertas, el historial de pagos, las direcciones Lightning, las identidades Nostr y las conexiones NWC. LNDK permanece en 0.3.16. Android Companion no cambia.`,
 
-    fr_FR: `Mise à jour de sécurité et de maintenance.
+    fr_FR: `BOLT12 Pay 0.3.18 — Améliorations des paiements et de la connexion
 
-rustls-webpki passe à 0.103.16 avec le correctif de défiance des certificats eMudhra. rustls, h2, tokio et anyhow ont également été mis à jour. Nouvelles versions du serveur et de la CLI LNDK pour AMD64 et ARM64.
+v0.3.17 — Paiements
+- Envoyer un paiement avec Entrée, avec validation et protection contre les doublons.
+- Accès rapide au scanner QR, au presse-papiers et aux contacts près du champ de paiement.
+- Détection des offres BOLT12, factures BOLT11, LNURL, adresses Lightning et clés publiques de nœuds.
+- Copier directement les adresses Lightning et les offres BOLT12.
+- Amélioration des contacts enregistrés, notifications mobiles et solutions de repli du presse-papiers.
 
-Aucun changement fonctionnel ni migration manuelle. Les données, l'historique des paiements, les connexions NWC, les adresses Lightning et les identités Nostr sont conservés. Android Companion reste inchangé.
+v0.3.18 — Connexion
+- Se connecter avec Entrée, le clavier mobile ou le bouton Login.
+- Connexion automatique améliorée avec les mots de passe enregistrés dans Chrome sur Android.
+- Protection contre les connexions simultanées et validation des champs vides.
+- Amélioration des erreurs traduites, des messages de limitation et des redirections sécurisées.
 
-Les paiements BOLT12 entrants et sortants, les notes Phoenix et NWC ont été testés avec succès.`,
+Aucune migration manuelle requise. Les offres, l'historique des paiements, les adresses Lightning, les identités Nostr et les connexions NWC sont conservés. LNDK reste en version 0.3.16. Android Companion reste inchangé.`,
 
-    pl_PL: `Aktualizacja bezpieczeństwa i konserwacji.
+    pl_PL: `BOLT12 Pay 0.3.18 — Ulepszenia płatności i logowania
 
-Zaktualizowano rustls-webpki do wersji 0.103.16 z poprawką dotyczącą wycofania zaufania do certyfikatów eMudhra, a także rustls, h2, tokio i anyhow. Zaktualizowano serwer i CLI LNDK dla AMD64 i ARM64.
+v0.3.17 — Płatności
+- Wysyłanie płatności klawiszem Enter z walidacją i ochroną przed duplikatami.
+- Szybki dostęp do skanera QR, schowka i kontaktów obok pola płatności.
+- Rozpoznawanie ofert BOLT12, faktur BOLT11, LNURL, adresów Lightning i kluczy publicznych węzłów.
+- Kopiowanie adresów Lightning i ofert BOLT12 bezpośrednio z pola płatności.
+- Lepsza obsługa zapisanych kontaktów, powiadomień mobilnych i schowka.
 
-Bez zmian funkcjonalnych i bez ręcznej migracji. Dane aplikacji, historia płatności, połączenia NWC, adresy Lightning i tożsamości Nostr pozostają zachowane. Android Companion pozostaje bez zmian.
+v0.3.18 — Logowanie
+- Logowanie klawiszem Enter, klawiaturą mobilną lub przyciskiem Login.
+- Ulepszone automatyczne logowanie z zapisanymi hasłami Chrome na Androidzie.
+- Ochrona przed równoczesnymi żądaniami i sprawdzanie pustych pól.
+- Lepsze komunikaty błędów, informacje o limitach prób i bezpieczne przekierowania.
 
-Pomyślnie przetestowano płatności BOLT12 w obu kierunkach, wiadomości Phoenix oraz NWC.`,
+Nie jest wymagana ręczna migracja. Oferty, historia płatności, adresy Lightning, tożsamości Nostr i połączenia NWC zostają zachowane. LNDK pozostaje w wersji 0.3.16. Android Companion pozostaje bez zmian.`,
   },
 
   migrations: {
