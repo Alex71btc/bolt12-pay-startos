@@ -9,15 +9,15 @@ export const short = {
 
 export const long = {
   en_US:
-    'BOLT12 Pay is a self-hosted Lightning payment and identity server. It runs an embedded LNDK runtime to create and pay BOLT12 offers through your StartOS LND node, and adds LNURL, Lightning Address, and BOLT11 support with a simple web UI.',
-  es_ES:
-    'BOLT12 Pay es un servidor de pagos e identidad Lightning autoalojado. Ejecuta un entorno LNDK integrado para crear y pagar ofertas BOLT12 a través de su nodo LND de StartOS, y añade soporte para LNURL, Lightning Address y BOLT11 con una sencilla interfaz web.',
+    'BOLT12 Pay brings BOLT12 Offers to your StartOS LND node using an integrated LNDK runtime. Create and receive Lightning payments with BOLT12, BIP353, LNURL, Nostr, Zaps and NWC. Connect an existing Phoenixd wallet as an alternative or additional payment backend. Switch between LND and Phoenixd while preserving wallet assignments, payment history and NWC connections. The StartOS package requires LND; Phoenixd is optional and may run on another server.',
   de_DE:
-    'BOLT12 Pay ist ein selbstgehosteter Lightning-Zahlungs- und Identitätsserver. Es führt eine eingebettete LNDK-Laufzeit aus, um BOLT12-Angebote über Ihren StartOS-LND-Knoten zu erstellen und zu bezahlen, und ergänzt LNURL-, Lightning-Address- und BOLT11-Unterstützung mit einer einfachen Weboberfläche.',
-  pl_PL:
-    'BOLT12 Pay to samodzielnie hostowany serwer płatności i tożsamości Lightning. Uruchamia wbudowane środowisko LNDK do tworzenia i opłacania ofert BOLT12 za pośrednictwem węzła LND w StartOS oraz dodaje obsługę LNURL, Lightning Address i BOLT11 z prostym interfejsem webowym.',
+    'BOLT12 Pay erweitert deinen StartOS-LND-Node mithilfe der integrierten LNDK-Laufzeit um BOLT12 Offers. Empfange und sende Lightning-Zahlungen mit BOLT12, BIP353, LNURL, Nostr, Zaps und NWC. Verbinde eine bestehende Phoenixd-Wallet als alternatives oder zusätzliches Zahlungsbackend. Wechsle zwischen LND und Phoenixd, ohne Wallet-Zuordnungen, Zahlungshistorie oder NWC-Verbindungen zu verlieren. Das StartOS-Paket benötigt LND; Phoenixd ist optional und kann auf einem anderen Server laufen.',
+  es_ES:
+    'BOLT12 Pay añade ofertas BOLT12 a tu nodo LND de StartOS mediante el entorno LNDK integrado. Envía y recibe pagos Lightning con BOLT12, BIP353, LNURL, Nostr, Zaps y NWC. Conecta una cartera Phoenixd existente como backend alternativo o adicional. Cambia entre LND y Phoenixd manteniendo las asignaciones de cartera, el historial de pagos y las conexiones NWC. El paquete StartOS requiere LND; Phoenixd es opcional y puede ejecutarse en otro servidor.',
   fr_FR:
-    "BOLT12 Pay est un serveur de paiement et d'identité Lightning auto-hébergé. Il exécute un environnement LNDK intégré pour créer et payer des offres BOLT12 via votre nœud LND StartOS, et ajoute la prise en charge de LNURL, Lightning Address et BOLT11 avec une interface web simple.",
+    'BOLT12 Pay ajoute les offres BOLT12 à votre nœud LND StartOS grâce au moteur LNDK intégré. Envoyez et recevez des paiements Lightning avec BOLT12, BIP353, LNURL, Nostr, Zaps et NWC. Connectez un portefeuille Phoenixd existant comme backend alternatif ou supplémentaire. Passez de LND à Phoenixd tout en conservant les associations de portefeuilles, l’historique des paiements et les connexions NWC. Le paquet StartOS nécessite LND ; Phoenixd est facultatif et peut fonctionner sur un autre serveur.',
+  pl_PL:
+    'BOLT12 Pay dodaje oferty BOLT12 do węzła LND w StartOS dzięki zintegrowanemu LNDK. Wysyłaj i odbieraj płatności Lightning przez BOLT12, BIP353, LNURL, Nostr, Zaps i NWC. Podłącz istniejący portfel Phoenixd jako alternatywny lub dodatkowy backend płatności. Przełączaj się między LND i Phoenixd, zachowując przypisania portfeli, historię płatności i połączenia NWC. Pakiet StartOS wymaga LND; Phoenixd jest opcjonalny i może działać na innym serwerze.',
 }
 
 export const depLndDescription = {
