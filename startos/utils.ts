@@ -1,4 +1,5 @@
 import { T } from '@start9labs/start-sdk'
+import { createHash, randomBytes } from 'crypto'
 import {
   controlHostId,
   gRPCHostId,
@@ -70,3 +71,9 @@ export function lnurlEnv(
     PUBLIC_BIP353_ADDRESS: `bolt12@${host}`,
   }
 }
+
+// Upstream's stored format (app.py _hash_password): unsalted SHA-256 hex of the password.
+export const hashUiPassword = (password: string | Buffer) =>
+  createHash('sha256').update(password).digest('hex')
+
+export const lockedUiPassword = () => hashUiPassword(randomBytes(32))
