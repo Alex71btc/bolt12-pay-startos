@@ -28,7 +28,7 @@ Creating BOLT12 offers also requires:
 3. Start BOLT12 Pay. It connects to LND automatically over the internal network using the credentials LND shares with it, mounted read-only — no macaroon copying required.
 4. Open the **Web UI** interface, sign in with that password, and finish the setup wizard. You can leave its password fields empty to keep the password you have.
 
-If you lose the password, run **Reset UI Password** for a new one.
+If you lose the password, run **Reset UI Password** for a new one. Existing browser sessions are signed out. Sign in with the new password and unlock NWC again if you need to manage connections.
 
 ## Public access (LNURL & Lightning Address)
 

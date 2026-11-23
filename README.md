@@ -140,7 +140,7 @@ Two actions.
 Generates the admin password for the web interface, writes its hash to `config.json`, and shows the password. Named **Create UI Password** until it has run once, **Reset UI Password** after.
 
 - **When to run it:** on install (the critical task), and whenever the password is lost.
-- **What it changes:** `ui_password_hash` in `config.json` and `uiPasswordSet` in `store.json`. The application reads the hash on every check, so it applies without a restart; sessions already signed in are upstream's to expire.
+- **What it changes:** `ui_password_hash` in `config.json` and `uiPasswordSet` in `store.json`. The application reads the hash on every check. Existing browser sessions and NWC admin unlocks are revoked on their next request without a restart.
 - **Cost:** immediate; runs whether or not the service is running.
 - **Repeat safety:** each run replaces the password — including one set in the web interface — so it asks for confirmation once a password exists.
 - **Output:** the password, masked and copyable.
